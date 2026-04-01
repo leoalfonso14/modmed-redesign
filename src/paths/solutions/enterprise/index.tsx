@@ -55,6 +55,7 @@ export function EnterprisePage() {
         description="Experience the power of an all-in-one platform built for the scale of modern medical enterprises. Unified, secure, and infinitely scalable."
         icon={Building2}
         primaryCTA={{ title: "Consult with Enterprise Team", url: "/contact" }}
+        secondaryCTA={{ title: "Watch Video", url: "/contact" }}
       />
 
       {/* Main Features */}

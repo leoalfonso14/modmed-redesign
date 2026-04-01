@@ -216,8 +216,8 @@ export function Chatbox() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed bottom-24 right-6 z-50 flex flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.12)]"
-            style={{ width: '380px', height: '560px' }}
+            className="fixed bottom-24 right-6 z-50 flex flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.12)] max-w-[calc(100vw-32px)] sm:max-w-none"
+            style={{ width: '380px', height: 'min(560px, calc(100vh - 120px))' }}
             role="dialog"
             aria-label="ModMed AI Assistant"
           >
@@ -275,7 +275,7 @@ export function Chatbox() {
             </AnimatePresence>
 
             {/* Messages area */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-5 scrollbar-thin">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden p-5 space-y-5 scrollbar-thin">
               {messages.length === 0 ? (
                 /* Empty state */
                 <div className="flex flex-col gap-5 pt-4">
@@ -321,7 +321,7 @@ export function Chatbox() {
                           <Bot className="w-4 h-4 text-brand-purple" />
                         </div>
                       )}
-                      <div className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed font-medium ${
+                      <div className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed font-medium wrap-break-word ${
                         isUser
                           ? 'rounded-tr-sm bg-brand-purple text-white shadow-[0_8px_16px_rgba(80,45,127,0.2)]'
                           : 'rounded-tl-sm bg-slate-50 border border-slate-100 text-slate-700'

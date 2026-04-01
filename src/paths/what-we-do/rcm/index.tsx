@@ -54,6 +54,7 @@ export function RCMPage() {
         description="Every year, US doctors lose an estimated $125 billion in revenue. Our RCM services and billing software help you recover what's yours."
         icon={DollarSign}
         primaryCTA={{ title: "Get a Billing Audit", url: "/contact" }}
+        secondaryCTA={{ title: "Watch Video", url: "/contact" }}
       />
 
       {/* Main Features */}

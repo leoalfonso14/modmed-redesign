@@ -43,6 +43,7 @@ export function PatientExperiencePage() {
         title="Empower your patient community."
         description="Simplify communication and build stronger relationships with patients through modern, digital experiences that put them in the driver's seat of their care."
         icon={Heart}
+        primaryCTA={{ title: "Book a Demo", url: "/contact" }}
       />
 
       {/* Main Features */}

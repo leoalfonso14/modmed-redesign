@@ -43,6 +43,7 @@ export function PracticeManagementPage() {
         title="Reimagine your practice operations."
         description="Streamline patient scheduling, billing, and engagement with AI-powered practice management software designed to automate the administrative burden."
         icon={Activity}
+        primaryCTA={{ title: "Book a Demo", url: "/contact" }}
       />
 
       {/* Main Features */}

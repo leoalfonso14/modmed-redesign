@@ -43,6 +43,7 @@ export function AnalyticsPage() {
         title="Turn your data into decisions."
         description="Rather than limiting you to basic metrics, our structured data approach gives you comprehensive analytical tools to reveal valuable answers."
         icon={BarChart3}
+        primaryCTA={{ title: "Book a Demo", url: "/contact" }}
       />
 
       {/* Main Features */}

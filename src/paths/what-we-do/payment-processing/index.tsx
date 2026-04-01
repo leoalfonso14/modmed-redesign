@@ -43,6 +43,7 @@ export function PaymentProcessingPage() {
         title="Secure payments made simple."
         description="Provide your patients with modern, flexible payment options while reducing the administrative burden on your staff. Integrated clinical billing."
         icon={CreditCard}
+        primaryCTA={{ title: "Book a Demo", url: "/contact" }}
       />
 
       {/* Main Features */}

@@ -60,6 +60,11 @@ export function SolutionHero({
           >
             {badge}
           </Badge>
+          <div className="flex items-center justify-center mb-8">
+            <div className="p-4 rounded-3xl bg-brand-purple/5 border border-brand-purple/10">
+              <Icon className="w-12 h-12 text-brand-purple/40" />
+            </div>
+          </div>
           <h1 className="text-5xl sm:text-8xl font-black text-slate-950 mb-8 tracking-tighter leading-[0.9]">
             {title.split(" ").map((word, i) => (
               <span key={i}>
@@ -84,51 +89,6 @@ export function SolutionHero({
         </motion.div>
 
         {/* Floating Interactive 3D Module Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 1 }}
-          className="relative max-w-5xl mx-auto"
-        >
-          <div className="aspect-video rounded-[48px] bg-slate-50 border border-slate-100 shadow-2xl relative overflow-hidden group">
-            {/* Simulation of a 3D interface */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(80,45,127,0.05),transparent)] pointer-events-none" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Icon className="w-32 h-32 text-brand-purple/20 animate-pulse" />
-            </div>
-
-            {/* Parallax UI Cards */}
-            <motion.div
-              style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
-              className="absolute top-12 left-12 w-64 p-6 bg-white rounded-3xl shadow-xl border border-slate-100"
-            >
-              <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center mb-4 text-brand-purple">
-                <Icon className="w-5 h-5" />
-              </div>
-              <div className="h-2 w-3/4 bg-slate-100 rounded mb-2" />
-              <div className="h-2 w-1/2 bg-slate-50 rounded" />
-            </motion.div>
-
-            <motion.div
-              style={{ y: useTransform(scrollYProgress, [0, 1], [0, -150]) }}
-              className="absolute bottom-12 right-12 w-72 p-6 bg-white rounded-3xl shadow-xl border border-slate-100"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600">
-                  <span className="text-[10px] font-bold">98%</span>
-                </div>
-                <div className="text-slate-500 font-bold text-[10px] tracking-widest uppercase">
-                  750M Encounters Trained Analytics
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="h-2 w-full bg-slate-100 rounded" />
-                <div className="h-2 w-full bg-slate-100 rounded" />
-                <div className="h-2 w-2/3 bg-slate-50 rounded" />
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

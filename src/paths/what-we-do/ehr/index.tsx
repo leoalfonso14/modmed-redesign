@@ -43,6 +43,7 @@ export function EHRPage() {
         title="EHR built for the way you practice."
         description="Innovation has always been at the core of what ModMed® does. We're building well-trained, specialty-specific AI solutions to help solve the clinical drudgery."
         icon={Layout}
+        primaryCTA={{ title: "Book a Demo", url: "/contact" }}
       />
 
       {/* Main Features */}
