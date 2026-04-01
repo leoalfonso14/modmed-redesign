@@ -1,7 +1,8 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { GlassPanel } from "./GlassPanel";
+import { useIsMobile } from "../../hooks/useIsMobile";
 import type { LucideIcon } from "lucide-react";
 
 interface FeatureParallaxProps {
@@ -23,6 +24,10 @@ export function FeatureParallax({
   reverse = false,
 }: FeatureParallaxProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+  const isActuallyDisabled = isMobile || shouldReduceMotion;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -30,8 +35,12 @@ export function FeatureParallax({
 
   const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
   const translateY = useSpring(useTransform(scrollYProgress, [0, 1], [100, -100]), springConfig);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scrollOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   const rotate = useTransform(scrollYProgress, [0, 1], [reverse ? -5 : 5, reverse ? 5 : -5]);
+
+  // Floating sub-elements transforms
+  const float1 = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const float2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
     <section ref={containerRef} className="py-12 md:py-24 px-6 overflow-hidden">
@@ -39,9 +48,10 @@ export function FeatureParallax({
         
         {/* Text Content */}
         <motion.div 
-          initial={{ opacity: 0, x: reverse ? 50 : -50 }}
+          initial={isActuallyDisabled ? { opacity: 1, x: 0 } : { opacity: 0, x: reverse ? 50 : -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="lg:w-1/2 space-y-6"
         >
           <div className={`w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-purple shadow-sm`}>
@@ -63,10 +73,12 @@ export function FeatureParallax({
           )}
         </motion.div>
 
-        {/* Parallax Visuals */}
         <div className="lg:w-1/2 relative min-h-[400px] w-full flex items-center justify-center">
           <motion.div 
-            style={{ y: translateY, opacity, rotate }}
+            style={isActuallyDisabled ? {} : { y: translateY, opacity: scrollOpacity, rotate }}
+            initial={isActuallyDisabled ? { opacity: 0, y: 20 } : undefined}
+            whileInView={isActuallyDisabled ? { opacity: 1, y: 0 } : undefined}
+            viewport={{ once: true }}
             className="relative z-10 w-full group"
           >
             <GlassPanel className="p-8 aspect-video border-brand-purple/10 bg-white/40 shadow-2xl backdrop-blur-xl group-hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
@@ -88,15 +100,19 @@ export function FeatureParallax({
                </div>
             </GlassPanel>
 
-            {/* Sub-floating elements */}
-            <motion.div 
-              style={{ y: useTransform(scrollYProgress, [0, 1], [-20, 20]) }}
-              className="absolute -top-12 -right-8 w-48 h-48 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none" 
-            />
-            <motion.div 
-              style={{ y: useTransform(scrollYProgress, [0, 1], [50, -50]) }}
-              className="absolute -bottom-8 -left-12 w-32 h-32 bg-blue-500/5 rounded-[40px] rotate-12 blur-2xl pointer-events-none" 
-            />
+            {/* Sub-floating elements - hidden on mobile for performance */}
+            {!isActuallyDisabled && (
+              <>
+                <motion.div 
+                  style={{ y: float1 }}
+                  className="absolute -top-12 -right-8 w-48 h-48 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none" 
+                />
+                <motion.div 
+                  style={{ y: float2 }}
+                  className="absolute -bottom-8 -left-12 w-32 h-32 bg-blue-500/5 rounded-[40px] rotate-12 blur-2xl pointer-events-none" 
+                />
+              </>
+            )}
           </motion.div>
         </div>
       </div>

@@ -6,6 +6,7 @@ interface SectionProps {
   children: React.ReactNode;
   glow?: 'left' | 'right' | 'none';
   fullWidth?: boolean;
+  disableOnMobile?: boolean;
 }
 
 export function Section({
@@ -13,7 +14,8 @@ export function Section({
   className = '',
   children,
   glow = 'none',
-  fullWidth = false
+  fullWidth = false,
+  disableOnMobile = false
 }: SectionProps) {
   const glowStyles = {
     left: (
@@ -29,7 +31,7 @@ export function Section({
     <section id={id} className={`py-12 md:py-24 relative overflow-hidden ${className}`}>
       {glowStyles[glow]}
       <div className={`${fullWidth ? 'w-full' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}`}>
-        <ScrollReveal>
+        <ScrollReveal disableOnMobile={disableOnMobile}>
           {children}
         </ScrollReveal>
       </div>

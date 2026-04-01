@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useChat, type UIMessage } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { X, Trash2, Send, Bot, AlertCircle, MessageSquareText } from 'lucide-react';
 
 // ─── localStorage helpers (12-hour TTL) ──────────────────────────────────────
@@ -92,6 +93,10 @@ export function Chatbox() {
   const [input, setInput] = useState('');
   const [isConfirmingReset, setIsConfirmingReset] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
+  const isActuallyDisabled = isMobile || shouldReduceMotion;
 
   const { messages, setMessages, sendMessage, status, error, stop } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
@@ -139,7 +144,7 @@ export function Chatbox() {
       {/* ── Floating toggle button ────────────────────────────────────── */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         <motion.div
-          animate={!isOpen ? { y: [0, -6, 0] } : { y: 0 }}
+          animate={(!isOpen && !isActuallyDisabled) ? { y: [0, -6, 0] } : { y: 0 }}
           transition={{ 
             duration: 4, 
             repeat: Infinity, 
@@ -147,8 +152,8 @@ export function Chatbox() {
           }}
           className="relative"
         >
-          {/* Pulsing Outer Ring (Clinical Glow) */}
-          {!isOpen && (
+          {/* Pulsing Outer Ring (Clinical Glow) - Disabled on mobile/reduced motion */}
+          {!isOpen && !isActuallyDisabled && (
             <motion.div
               animate={{ 
                 scale: [1, 1.4, 1.6], 
@@ -311,9 +316,9 @@ export function Chatbox() {
                   return (
                     <motion.div
                       key={m.id}
-                      initial={{ opacity: 0, y: 8 }}
+                      initial={isActuallyDisabled ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: isActuallyDisabled ? 0 : 0.2 }}
                       className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                     >
                       {!isUser && (
