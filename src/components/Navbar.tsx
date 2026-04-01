@@ -1,60 +1,303 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { VideoModal } from "./ui/VideoModal";
+import { Video as VideoComponent } from "./ui/Video";
 import {
-  ChevronDown, Menu, X,
-  Layers, Eye, PersonStanding, Dna, Activity, Wind, Ear,
-  Syringe, Hand, Footprints, TestTube,
-  BrainCircuit, CalendarDays, TrendingUp, BarChart3, MessageSquare, CreditCard,
-  Sparkles, Mic2,
-  Building2, Newspaper, Briefcase,
-  BookOpen, Star, Video, Library,
-  LogIn, CalendarCheck,
-  Zap, Users, FileText, BarChart2,
-} from 'lucide-react';
+  ChevronDown,
+  Menu,
+  X,
+  ArrowRight,
+  Layers,
+  Eye,
+  PersonStanding,
+  Dna,
+  Activity,
+  Wind,
+  Ear,
+  Syringe,
+  Hand,
+  Footprints,
+  TestTube,
+  BrainCircuit,
+  Calendar,
+  BarChart3,
+  MessageSquare,
+  CreditCard,
+  Sparkles,
+  Building2,
+  Newspaper,
+  Briefcase,
+  BookOpen,
+  Star,
+  Video as VideoIcon,
+  Library,
+  LogIn,
+  CalendarCheck,
+  Zap,
+  Users,
+  Share2,
+  Layout,
+  BriefcaseBusiness,
+  DollarSign,
+  Play,
+  LayoutGrid,
+  Cable,
+} from "lucide-react";
 
 // ─────────────────────────────────────────────
 // Nav data
 // ─────────────────────────────────────────────
 
 const SPECIALTIES = [
-  { label: 'Allergy',          icon: Wind,          href: '/specialties/allergy',          desc: 'Vial & testing management' },
-  { label: 'Dermatology',      icon: Layers,         href: '/specialties/dermatology',      desc: 'Tap-and-go precision charting' },
-  { label: 'ENT',              icon: Ear,            href: '/specialties/ent',              desc: 'Otolaryngology workflows' },
-  { label: 'Gastroenterology', icon: Dna,            href: '/specialties/gastroenterology', desc: 'Procedure-driven documentation' },
-  { label: 'OBGYN',            icon: Activity,       href: '/specialties/obgyn',            desc: "Women's health-first EHR" },
-  { label: 'Ophthalmology',    icon: Eye,            href: '/specialties/ophthalmology',    desc: 'Cloud image management' },
-  { label: 'Orthopedics',      icon: PersonStanding, href: '/specialties/orthopedics',      desc: 'MSK & MIPS-ready workflows' },
-  { label: 'Pain Management',  icon: Syringe,        href: '/specialties/pain-management',  desc: 'Procedure & medication tracking' },
-  { label: 'Plastic Surgery',  icon: Hand,           href: '/specialties/plastic-surgery',  desc: 'Aesthetic-focused charting' },
-  { label: 'Podiatry',         icon: Footprints,     href: '/specialties/podiatry',         desc: 'Lower extremity focus' },
-  { label: 'Urology',          icon: TestTube,       href: '/specialties/urology',          desc: 'Complex protocol support' },
+  {
+    label: "Allergy",
+    icon: Wind,
+    href: "/specialties/allergy",
+    desc: "Vial & testing management",
+  },
+  {
+    label: "Dermatology",
+    icon: Layers,
+    href: "/specialties/dermatology",
+    desc: "Tap-and-go precision charting",
+  },
+  {
+    label: "ENT",
+    icon: Ear,
+    href: "/specialties/ent",
+    desc: "Otolaryngology workflows",
+  },
+  {
+    label: "Gastroenterology",
+    icon: Dna,
+    href: "/specialties/gastroenterology",
+    desc: "Procedure-driven documentation",
+  },
+  {
+    label: "OBGYN",
+    icon: Activity,
+    href: "/specialties/obgyn",
+    desc: "Women's health-first EHR",
+  },
+  {
+    label: "Ophthalmology",
+    icon: Eye,
+    href: "/specialties/ophthalmology",
+    desc: "Cloud image management",
+  },
+  {
+    label: "Orthopedics",
+    icon: PersonStanding,
+    href: "/specialties/orthopedics",
+    desc: "MSK & MIPS-ready workflows",
+  },
+  {
+    label: "Pain Management",
+    icon: Syringe,
+    href: "/specialties/pain-management",
+    desc: "Procedure & medication tracking",
+  },
+  {
+    label: "Plastic Surgery",
+    icon: Hand,
+    href: "/specialties/plastic-surgery",
+    desc: "Aesthetic-focused charting",
+  },
+  {
+    label: "Podiatry",
+    icon: Footprints,
+    href: "/specialties/podiatry",
+    desc: "Lower extremity focus",
+  },
+  {
+    label: "Urology",
+    icon: TestTube,
+    href: "/specialties/urology",
+    desc: "Complex protocol support",
+  },
 ];
 
 const SOLUTIONS = [
-  { label: 'EHR / EMR',           icon: BrainCircuit,  href: '/what-we-do/ehr',                desc: 'AI-powered specialty documentation', color: 'text-brand-purple-light', bg: 'bg-brand-purple/20', border: 'border-brand-purple/20' },
-  { label: 'Practice Management',  icon: CalendarDays,  href: '/what-we-do/practice-management', desc: 'Scheduling, front-office & billing',  color: 'text-blue-400',           bg: 'bg-blue-500/15',      border: 'border-blue-500/20' },
-  { label: 'Revenue Cycle',        icon: TrendingUp,    href: '/what-we-do/rcm',                desc: 'Expert billing team + software',      color: 'text-emerald-400',        bg: 'bg-emerald-500/15',   border: 'border-emerald-500/20' },
-  { label: 'Analytics',            icon: BarChart3,     href: '/what-we-do/analytics',          desc: 'Near-real-time KPI dashboards',       color: 'text-violet-400',         bg: 'bg-violet-500/15',    border: 'border-violet-500/20' },
-  { label: 'Patient Experience',   icon: MessageSquare, href: '/what-we-do/patient-experience',  desc: 'Automated patient engagement',        color: 'text-cyan-400',           bg: 'bg-cyan-500/15',      border: 'border-cyan-500/20' },
-  { label: 'Payment Processing',   icon: CreditCard,    href: '/what-we-do/payment-processing',  desc: 'Convenient integrated payments',      color: 'text-amber-400',          bg: 'bg-amber-500/15',     border: 'border-amber-500/20' },
+  {
+    label: "AI",
+    icon: Sparkles,
+    href: "/solutions/ai",
+    desc: "See the future of healthcare intelligence",
+    color: "text-purple-600",
+    bg: "bg-purple-50",
+    border: "border-purple-100",
+  },
+  {
+    label: "Patient Experience",
+    icon: MessageSquare,
+    href: "/what-we-do/patient-experience",
+    desc: "Simplify communication & build relationships",
+    color: "text-cyan-600",
+    bg: "bg-cyan-50",
+    border: "border-cyan-100",
+  },
+  {
+    label: "Analytics & Reporting",
+    icon: BarChart3,
+    href: "/what-we-do/analytics",
+    desc: "Benchmark critical practice data & KPI",
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+    border: "border-violet-100",
+  },
+  {
+    label: "Clinical Workflow",
+    icon: Layout,
+    href: "/what-we-do/ehr",
+    desc: "Automate documentation & streamline exams",
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+    border: "border-emerald-100",
+  },
+  {
+    label: "For Enterprise",
+    icon: BriefcaseBusiness,
+    href: "/solutions/enterprise",
+    desc: "All-in-one solutions for large orgs",
+    color: "text-blue-600",
+    bg: "bg-blue-50",
+    border: "border-blue-100",
+  },
+  {
+    label: "Billing & Operations",
+    icon: DollarSign,
+    href: "/what-we-do/rcm",
+    desc: "Position your practice for steady growth",
+    color: "text-amber-600",
+    bg: "bg-amber-50",
+    border: "border-amber-100",
+  },
 ];
 
-const AI_PRODUCTS = [
-  { label: 'AI Overview',       icon: Sparkles, href: '/solutions/ai',        desc: 'Responsible AI built for specialty practices', featured: false },
-  { label: 'ModMed Scribe 2.0', icon: Mic2,     href: '/solutions/ai/scribe', desc: 'Ambient listening → clinical notes in real time', featured: true },
+const PRODUCTS_SERVICES = [
+  {
+    label: "EHR",
+    icon: Layout,
+    href: "/what-we-do/ehr",
+    desc: "Specialty-specific electronic health records",
+  },
+  {
+    label: "Practice Management",
+    icon: Calendar,
+    href: "/what-we-do/practice-management",
+    desc: "Streamline scheduling & documentation",
+  },
+  {
+    label: "Revenue Cycle Management",
+    icon: DollarSign,
+    href: "/what-we-do/rcm",
+    desc: "Maximize collections & billing efficiency",
+  },
+  {
+    label: "Analytics",
+    icon: BarChart3,
+    href: "/what-we-do/analytics",
+    desc: "Actionable data for practice performance",
+  },
+  {
+    label: "Patient Communication",
+    icon: MessageSquare,
+    href: "/what-we-do/patient-experience",
+    desc: "Engage patients with integrated tools",
+  },
+  {
+    label: "Payment Processing",
+    icon: CreditCard,
+    href: "/what-we-do/payment-processing",
+    desc: "Secure, modern payment collections",
+  },
+  {
+    label: "See All",
+    icon: LayoutGrid,
+    href: "/what-we-do",
+    desc: "Explore all ModMed offerings",
+  },
+];
+
+const INTEGRATIONS = [
+  {
+    label: "App Marketplace",
+    icon: Zap,
+    href: "/integrations/marketplace",
+    desc: "Connect with 200+ partner solutions",
+  },
+  {
+    label: "Labs",
+    icon: TestTube,
+    href: "/integrations/labs",
+    desc: "Direct electronic lab connectivity",
+  },
+  {
+    label: "Certified FHIR API",
+    icon: BrainCircuit,
+    href: "/integrations/api",
+    desc: "Standardized interoperability",
+  },
+  {
+    label: "Other Connections",
+    icon: Share2,
+    href: "/integrations/connections",
+    desc: "HIEs, registries, and custom endpoints",
+  },
 ];
 
 const COMPANY = [
-  { label: 'About Us',     icon: Building2, href: '/who-we-are/about',   desc: 'Our story, mission and leadership' },
-  { label: 'News & Press', icon: Newspaper, href: '/who-we-are/news',    desc: 'Latest announcements and media coverage' },
-  { label: 'Careers',      icon: Briefcase, href: '/who-we-are/careers', desc: 'Join the team building the future of healthcare' },
+  {
+    label: "About Us",
+    icon: Building2,
+    href: "/who-we-are/about",
+    desc: "Our story, mission and leadership",
+  },
+  {
+    label: "Events",
+    icon: Calendar,
+    href: "/who-we-are/events",
+    desc: "Meet us at Momentum and industry shows",
+  },
+  {
+    label: "News & Press",
+    icon: Newspaper,
+    href: "/who-we-are/news",
+    desc: "Latest announcements and media coverage",
+  },
+  {
+    label: "Careers",
+    icon: Briefcase,
+    href: "https://modmed.wd501.myworkdayjobs.com/ModMed12",
+    desc: "Join the team building the future of healthcare",
+  },
 ];
 
 const RESOURCES = [
-  { label: 'Blog',            icon: BookOpen, href: '/resources/blog',             desc: 'Expert insights & clinical perspectives' },
-  { label: 'Success Stories', icon: Star,     href: '/resources/success-stories',  desc: 'Real results from real practices' },
-  { label: 'Webinars',        icon: Video,    href: '/resources/webinars',         desc: 'Live & on-demand expert sessions' },
-  { label: 'All Resources',   icon: Library,  href: '/resources',                  desc: 'Browse the full knowledge hub' },
+  {
+    label: "Blog",
+    icon: BookOpen,
+    href: "/resources/blog",
+    desc: "Expert insights & clinical perspectives",
+  },
+  {
+    label: "Success Stories",
+    icon: Star,
+    href: "/resources/success-stories",
+    desc: "Real results from real practices",
+  },
+  {
+    label: "Webinars",
+    icon: VideoIcon,
+    href: "/resources/webinars",
+    desc: "Live & on-demand expert sessions",
+  },
+  {
+    label: "All Resources",
+    icon: Library,
+    href: "/resources",
+    desc: "Browse the full knowledge hub",
+  },
 ];
 
 // ─────────────────────────────────────────────
@@ -79,40 +322,62 @@ function SpecialtiesPanel({ onClose }: { onClose: () => void }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
                 isActive
-                  ? 'bg-brand-purple/15 text-white'
-                  : 'hover:bg-white/6 text-slate-300 hover:text-white'
+                  ? "bg-slate-100 text-slate-900"
+                  : "hover:bg-slate-50 text-slate-600 hover:text-slate-900"
               }`
             }
           >
-            <div className="w-8 h-8 rounded-lg bg-slate-800 border border-white/8 flex items-center justify-center shrink-0 group-hover:border-white/15 group-hover:bg-slate-700 transition-all">
-              <s.icon className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+            <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shrink-0 group-hover:border-slate-300 group-hover:bg-slate-50 transition-all shadow-sm">
+              <s.icon className="w-4 h-4 text-slate-400 group-hover:text-brand-purple transition-colors" />
             </div>
             <div className="min-w-0">
-              <div className="text-sm font-semibold leading-tight truncate">{s.label}</div>
-              <div className="text-[11px] text-slate-500 leading-tight mt-0.5 truncate">{s.desc}</div>
+              <div className="text-sm font-semibold leading-tight truncate">
+                {s.label}
+              </div>
+              <div className="text-[11px] text-slate-500 leading-tight mt-0.5 truncate">
+                {s.desc}
+              </div>
             </div>
           </NavLink>
         ))}
       </div>
 
-      {/* Right — feature card */}
-      <div className="w-[260px] shrink-0 border-l border-white/8 bg-gradient-to-b from-brand-purple-dark/40 to-slate-950/20 p-6 flex flex-col justify-between">
-        <div>
-          <div className="w-10 h-10 rounded-xl bg-brand-purple/30 border border-brand-purple/40 flex items-center justify-center mb-4">
-            <Sparkles className="w-5 h-5 text-brand-purple-light" />
+      {/* Right — featured card */}
+      <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
+            <span>Featured Focus</span>
           </div>
-          <p className="text-white font-bold text-base leading-snug mb-2">
-            Built by specialists,<br />for specialists.
-          </p>
-          <p className="text-slate-400 text-sm leading-relaxed">
-            Every specialty EHR is designed with practicing physicians — not adapted from a generic template.
-          </p>
+          
+          <div className="group/feat cursor-pointer">
+            <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 border border-brand-purple/5 shadow-sm group-hover/feat:scale-110 group-hover/feat:shadow-md transition-all duration-500">
+              <Dna className="w-7 h-7 text-brand-purple" />
+            </div>
+            <h4 className="text-sm font-black text-slate-950 mb-3 uppercase tracking-tight leading-snug">
+              Specialty-Clinical Build
+            </h4>
+            <p className="text-slate-500 text-[11px] leading-relaxed font-medium mb-6">
+              ModMed is not a generic vendor. We build specifically for your workflow metrics.
+            </p>
+          </div>
         </div>
-        <div className="mt-6 pt-5 border-t border-white/8">
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Users className="w-3.5 h-3.5 text-slate-500" />
-            <span><span className="text-white font-semibold">35,000+</span> providers trust ModMed</span>
-          </div>
+        
+        <div className="relative z-10 pt-8 border-t border-slate-200/60">
+          <Link
+            to="/specialties"
+            onClick={onClose}
+            className="flex items-center justify-between group/link"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-brand-purple">
+              View all specialties
+            </span>
+            <div className="w-7 h-7 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple group-hover/link:bg-brand-purple group-hover/link:text-white transition-all duration-300">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
         </div>
       </div>
     </div>
@@ -122,11 +387,134 @@ function SpecialtiesPanel({ onClose }: { onClose: () => void }) {
 function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex">
-      {/* Left — product list */}
-      <div className="flex-1 p-6 space-y-1">
-        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.12em] mb-4">
-          Products & Services
-        </p>
+      {/* Products & Services */}
+      <div className="flex-2 p-8 grid grid-cols-2 gap-4 content-start">
+        <div className="col-span-2 mb-3 px-3">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            <LayoutGrid className="w-3 h-3" />
+            <span>Products & Services</span>
+          </div>
+        </div>
+        {PRODUCTS_SERVICES.map((item) => (
+          <NavLink
+            key={item.href}
+            to={item.href}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-start gap-4 p-3 rounded-xl transition-all duration-200 group ${
+                isActive
+                  ? "bg-slate-100 text-slate-900 shadow-sm"
+                  : "hover:bg-slate-50 text-slate-600 hover:text-slate-900"
+              }`
+            }
+          >
+            <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0 group-hover:border-brand-purple/20 group-hover:scale-105 transition-all shadow-sm">
+              {item.icon && (
+                <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand-purple transition-colors" />
+              )}
+            </div>
+            <div>
+              <div className="text-sm font-bold leading-tight mb-1">
+                {item.label}
+              </div>
+              <div className="text-[11px] text-slate-500 leading-tight line-clamp-1">
+                {item.desc}
+              </div>
+            </div>
+          </NavLink>
+        ))}
+      </div>
+
+      {/* Integrations */}
+      <div className="flex-1 p-8 space-y-4 content-start border-l border-slate-100">
+        <div className="mb-3 px-3">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            <Cable className="w-3 h-3" />
+            <span>Integrations</span>
+          </div>
+        </div>
+        <div className="space-y-1">
+          {INTEGRATIONS.map((item) => (
+            <NavLink
+              key={item.href}
+              to={item.href}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group ${
+                  isActive
+                    ? "bg-slate-100 text-slate-900 shadow-sm"
+                    : "hover:bg-slate-50 text-slate-600 hover:text-slate-900"
+                }`
+              }
+            >
+              <div className="w-8 h-8 rounded-lg bg-slate-100/50 flex items-center justify-center shrink-0 group-hover:bg-white border border-transparent group-hover:border-slate-200 transition-all">
+                {item.icon && (
+                  <item.icon className="w-4 h-4 text-slate-400 group-hover:text-brand-purple transition-colors" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs font-bold leading-none mb-1 truncate">
+                  {item.label}
+                </div>
+                <div className="text-[10px] text-slate-500 leading-tight truncate">
+                  {item.desc}
+                </div>
+              </div>
+            </NavLink>
+          ))}
+        </div>
+      </div>
+
+      {/* Right — Featured Platform */}
+      <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
+        <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
+            <span>Top Adoption</span>
+          </div>
+          
+          <div className="group/feat cursor-pointer">
+            <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 border border-brand-purple/5 shadow-sm group-hover/feat:scale-110 group-hover/feat:shadow-md transition-all duration-500">
+              <CalendarCheck className="w-7 h-7 text-brand-purple" />
+            </div>
+            <h4 className="text-sm font-black text-slate-950 mb-3 uppercase tracking-tight leading-snug">
+              Practice Management
+            </h4>
+            <p className="text-slate-500 text-[11px] leading-relaxed font-medium mb-6">
+              The engine of your modern center of clinical excellence. High-velocity documentation.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 pt-8 border-t border-slate-200/60">
+          <Link
+            to="/contact"
+            onClick={onClose}
+            className="flex items-center justify-between p-4 rounded-2xl bg-brand-purple text-white hover:bg-brand-purple-light transition-all shadow-xl hover:shadow-brand-purple/40 group/cta"
+          >
+            <div className="text-[10px] font-black uppercase tracking-[0.2em]">
+              Platform Demo
+            </div>
+            <ArrowRight className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SolutionsPanel({ onClose, onOpenVideo }: { onClose: () => void; onOpenVideo: () => void }) {
+  return (
+    <div className="flex">
+      {/* Left — nav list */}
+      <div className="flex-1 p-6 grid grid-cols-2 gap-x-4 gap-y-1 content-start">
+        <div className="col-span-2 mb-3">
+          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.12em]">
+            Practice Solutions
+          </p>
+        </div>
         {SOLUTIONS.map((s) => (
           <NavLink
             key={s.href}
@@ -134,126 +522,99 @@ function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
             onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-150 group ${
-                isActive ? 'bg-white/8 text-white' : 'hover:bg-white/5 text-slate-300 hover:text-white'
+                isActive
+                  ? "bg-slate-100 text-slate-900"
+                  : "hover:bg-slate-50 text-slate-600 hover:text-slate-900"
               }`
             }
           >
-            <div className={`w-9 h-9 rounded-xl ${s.bg} border ${s.border} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform`}>
-              <s.icon className={`w-4.5 h-4.5 ${s.color}`} />
+            <div
+              className={`w-9 h-9 rounded-xl ${s.bg} border ${s.border} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}
+            >
+              <s.icon className={`w-5 h-5 ${s.color}`} />
             </div>
             <div>
-              <div className={`text-sm font-semibold leading-tight ${s.color}`}>{s.label}</div>
-              <div className="text-[12px] text-slate-500 mt-0.5 leading-tight">{s.desc}</div>
+              <div className="text-sm font-semibold leading-tight">
+                {s.label}
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1 leading-tight">
+                {s.desc}
+              </div>
             </div>
           </NavLink>
         ))}
       </div>
 
-      {/* Right — featured EHR card */}
-      <div className="w-[250px] shrink-0 border-l border-white/8 bg-gradient-to-b from-slate-900 to-slate-950 p-6 flex flex-col justify-between">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-purple/20 border border-brand-purple/30 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-purple-light" />
-            <span className="text-[10px] font-bold text-brand-purple-light uppercase tracking-wider">KLAS #1 Rated</span>
-          </div>
-          <p className="text-white font-bold text-sm leading-snug mb-2">
-            The only all-in-one platform for specialty medicine
-          </p>
-          <p className="text-slate-400 text-xs leading-relaxed">
-            EHR, PM, RCM, and AI — all connected. One login. Zero silos.
-          </p>
+      {/* Right — featured video card */}
+      <div className="w-[320px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col relative overflow-hidden group/panel">
+        <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
+          <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
+          <span>Latest Innovation</span>
         </div>
 
-        {/* Mini stat grid */}
-        <div className="mt-6 grid grid-cols-2 gap-3">
-          {[
-            { value: '98%', label: 'Claim acceptance' },
-            { value: '93%', label: 'Top documentation rating' },
-            { value: '90%', label: 'Would recommend us' },
-            { value: '50%', label: 'Less charting time' },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-white/4 rounded-xl p-3 border border-white/6">
-              <div className="text-white font-black text-lg leading-none">{stat.value}</div>
-              <div className="text-slate-500 text-[10px] leading-tight mt-1">{stat.label}</div>
+        <div 
+          onClick={onOpenVideo}
+          className="relative z-10 group/video cursor-pointer overflow-hidden rounded-[24px] bg-slate-950 aspect-video mb-8 border border-slate-200/20 shadow-2xl"
+        >
+          {/* Silent Promo Loop */}
+          <VideoComponent
+            src="https://www.modmed.com/wp-content/uploads/2025/11/CRP-13472-1125-Video-ModMed-Scribe-2.0-Launch-8Sec-updaated.mp4"
+            autoPlay
+            loop
+            muted
+            className="w-full h-full object-cover transition-transform duration-700 group-hover/video:scale-110 opacity-70 group-hover/video:opacity-100"
+          />
+          
+          {/* Ambient Overlays */}
+          <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent opacity-60 group-hover/video:opacity-40 transition-opacity" />
+          
+          {/* Play Icon and Prompt */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+            <div className="w-14 h-14 rounded-full bg-brand-purple text-white flex items-center justify-center shadow-2xl group-hover/video:scale-110 transition-all duration-500">
+              <Play className="w-6 h-6 fill-current ml-1" />
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+            <span className="text-[9px] font-black text-white uppercase tracking-[0.3em] opacity-0 group-hover/video:opacity-100 translate-y-2 group-hover/video:translate-y-0 transition-all duration-300">
+              Tap to Watch Full Video
+            </span>
+          </div>
 
-function AIPanel({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="flex">
-      {/* Left — AI products */}
-      <div className="flex-1 p-6 space-y-2">
-        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.12em] mb-4">
-          AI-Powered Innovation
-        </p>
-        {AI_PRODUCTS.map((p) => (
-          <NavLink
-            key={p.href}
-            to={p.href}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `flex items-start gap-4 px-4 py-4 rounded-2xl border transition-all duration-150 group ${
-                p.featured
-                  ? isActive
-                    ? 'border-brand-purple/60 bg-brand-purple/15'
-                    : 'border-brand-purple/30 bg-brand-purple/8 hover:bg-brand-purple/12 hover:border-brand-purple/50'
-                  : isActive
-                  ? 'border-white/15 bg-white/8'
-                  : 'border-white/5 hover:border-white/12 hover:bg-white/5'
-              }`
-            }
+          {/* Scribe 2.0 Badge */}
+          <div className="absolute top-4 left-4">
+            <div className="px-2 py-1 rounded-full bg-brand-purple/20 backdrop-blur-md border border-brand-purple/30 text-brand-purple-light text-[8px] font-black uppercase tracking-widest">
+              Scribe 2.0 Promo
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 flex-1">
+          <h4 className="text-sm font-black text-slate-950 mb-3 leading-snug uppercase tracking-tight">
+            ModMed Scribe: Ambient AI
+          </h4>
+          <p className="text-[11px] text-slate-500 font-medium leading-relaxed mb-6">
+            Physicians have saved over 2.5 million moments with our clinical intelligence hub.
+          </p>
+          <button
+            onClick={onOpenVideo}
+            className="flex items-center gap-2 text-[10px] font-black text-brand-purple group/link uppercase tracking-widest"
           >
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform ${p.featured ? 'bg-brand-purple/30' : 'bg-white/8'}`}>
-              <p.icon className={`w-5 h-5 ${p.featured ? 'text-brand-purple-light' : 'text-slate-400'}`} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className={`text-sm font-bold ${p.featured ? 'text-brand-purple-light' : 'text-white'}`}>{p.label}</span>
-                {p.featured && (
-                  <span className="px-2 py-0.5 rounded-full bg-brand-purple/40 border border-brand-purple/50 text-[9px] font-black text-brand-purple-light uppercase tracking-widest">New</span>
-                )}
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">{p.desc}</p>
-            </div>
-          </NavLink>
-        ))}
-      </div>
-
-      {/* Right — Scribe showcase card */}
-      <div className="w-[260px] shrink-0 border-l border-white/8 bg-gradient-to-b from-brand-purple-dark/50 to-slate-950/30 p-6 flex flex-col">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-brand-purple/40 border border-brand-purple/50 flex items-center justify-center">
-            <Mic2 className="w-4 h-4 text-brand-purple-light" />
-          </div>
-          <span className="text-xs font-bold text-brand-purple-light uppercase tracking-wider">ModMed Scribe 2.0</span>
+            Watch demo
+            <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1.5 transition-transform duration-300" />
+          </button>
         </div>
-        <p className="text-white font-bold text-sm leading-snug mb-3">
-          "Listens like a human.<br />Documents like a scribe."
-        </p>
-        <p className="text-slate-400 text-xs leading-relaxed mb-6">
-          Ambient AI captures your natural conversation and translates it directly into structured clinical notes and billing codes.
-        </p>
 
-        <div className="space-y-2.5 mt-auto">
-          {[
-            { icon: Zap,       stat: 'Up to 50%',      label: 'less charting time' },
-            { icon: FileText,  stat: '750M+',           label: 'encounters trained on' },
-            { icon: BarChart2, stat: 'Near-real-time',  label: 'ICD-10 code suggestions' },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-brand-purple/20 border border-brand-purple/30 flex items-center justify-center shrink-0">
-                <item.icon className="w-3 h-3 text-brand-purple-light" />
-              </div>
-              <span className="text-xs text-slate-400">
-                <span className="text-white font-semibold">{item.stat}</span> {item.label}
-              </span>
-            </div>
-          ))}
+        <div className="relative z-10 pt-8 border-t border-slate-200/60 mt-4">
+          <Link
+            to="/resources"
+            onClick={onClose}
+            className="flex items-center justify-between group/bot"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">
+              Knowledge Hub
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover/bot:translate-x-1.5 transition-transform duration-300" />
+          </Link>
         </div>
       </div>
     </div>
@@ -262,56 +623,158 @@ function AIPanel({ onClose }: { onClose: () => void }) {
 
 function CompanyPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div className="p-5 space-y-1 w-[320px]">
-      <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.12em] mb-3">Company</p>
-      {COMPANY.map((item) => (
-        <NavLink
-          key={item.href}
-          to={item.href}
-          onClick={onClose}
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
-              isActive ? 'bg-brand-purple/12 text-white' : 'hover:bg-white/5 text-slate-300 hover:text-white'
-            }`
-          }
-        >
-          <div className="w-8 h-8 rounded-lg bg-slate-800 border border-white/8 flex items-center justify-center shrink-0 group-hover:border-white/15 transition-colors">
-            <item.icon className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+    <div className="flex">
+      {/* Left — rich content list */}
+      <div className="flex-1 p-6 grid grid-cols-2 gap-x-4 gap-y-1 content-start">
+        <div className="col-span-2 mb-3">
+          <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+            Our Organization
+          </p>
+        </div>
+        {COMPANY.map((item) => (
+          <NavLink
+            key={item.href}
+            to={item.href}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-center gap-4 px-3 py-3.5 rounded-xl transition-all duration-300 group ${
+                isActive
+                  ? "bg-slate-50 text-slate-900 shadow-sm"
+                  : "hover:bg-slate-50/80 text-slate-600 hover:text-slate-900"
+              }`
+            }
+          >
+            <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-slate-200 transition-all shadow-sm">
+              <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand-purple transition-colors" />
+            </div>
+            <div>
+              <div className="text-sm font-bold leading-none mb-1.5 group-hover:translate-x-0.5 transition-transform">
+                {item.label}
+              </div>
+              <div className="text-[10px] text-slate-500 font-medium leading-tight line-clamp-1">
+                {item.desc}
+              </div>
+            </div>
+          </NavLink>
+        ))}
+      </div>
+
+      {/* Right — boutique card */}
+      <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between overflow-hidden relative group/panel">
+        <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <Users className="w-3.5 h-3.5 text-brand-purple" />
+            <span>Our Vision</span>
           </div>
           <div>
-            <div className="text-sm font-semibold leading-tight">{item.label}</div>
-            <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{item.desc}</div>
+            <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 shadow-sm border border-brand-purple/5 group-hover/panel:scale-110 group-hover/panel:shadow-md transition-all duration-500">
+              <Layout className="w-7 h-7 text-brand-purple" />
+            </div>
+            <h4 className="text-sm font-black text-slate-950 mb-3 uppercase tracking-tight leading-snug">
+              Physician-Led Innovation
+            </h4>
+            <p className="text-slate-500 text-[11px] font-medium leading-relaxed mb-6">
+              Founded by doctors to solve the clinical burnout crisis. We build only what's necessary.
+            </p>
           </div>
-        </NavLink>
-      ))}
+        </div>
+
+        <div className="relative z-10 pt-8 border-t border-slate-200/60">
+          <Link
+            to="/who-we-are/about"
+            onClick={onClose}
+            className="flex items-center justify-between group/link"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-brand-purple">
+              Meet founders
+            </span>
+            <div className="w-7 h-7 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple group-hover/link:bg-brand-purple group-hover/link:text-white transition-all duration-300">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
 
 function ResourcesPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div className="p-5 space-y-1 w-[320px]">
-      <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.12em] mb-3">Knowledge Hub</p>
-      {RESOURCES.map((item) => (
-        <NavLink
-          key={item.href}
-          to={item.href}
-          onClick={onClose}
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
-              isActive ? 'bg-brand-purple/12 text-white' : 'hover:bg-white/5 text-slate-300 hover:text-white'
-            }`
-          }
-        >
-          <div className="w-8 h-8 rounded-lg bg-slate-800 border border-white/8 flex items-center justify-center shrink-0 group-hover:border-white/15 transition-colors">
-            <item.icon className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+    <div className="flex">
+      {/* Left — rich content list */}
+      <div className="flex-1 p-6 grid grid-cols-2 gap-x-4 gap-y-1 content-start">
+        <div className="col-span-2 mb-3">
+          <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+            Knowledge Hub
+          </p>
+        </div>
+        {RESOURCES.map((item) => (
+          <NavLink
+            key={item.href}
+            to={item.href}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-center gap-4 px-3 py-3.5 rounded-xl transition-all duration-300 group ${
+                isActive
+                  ? "bg-slate-50 text-slate-900 shadow-sm"
+                  : "hover:bg-slate-50/80 text-slate-600 hover:text-slate-900"
+              }`
+            }
+          >
+            <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-brand-purple/20 transition-all shadow-sm">
+              <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand-purple transition-colors" />
+            </div>
+            <div>
+              <div className="text-sm font-bold leading-none mb-1.5 group-hover:translate-x-0.5 transition-transform">
+                {item.label}
+              </div>
+              <div className="text-[10px] text-slate-500 font-medium leading-tight line-clamp-1">
+                {item.desc}
+              </div>
+            </div>
+          </NavLink>
+        ))}
+      </div>
+
+      {/* Right — high-end featured card */}
+      <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
+        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <BookOpen className="w-3.5 h-3.5 text-brand-purple" />
+            <span>Clinical Guide</span>
           </div>
           <div>
-            <div className="text-sm font-semibold leading-tight">{item.label}</div>
-            <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{item.desc}</div>
+            <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 shadow-sm border border-brand-purple/5 group-hover/panel:scale-110 group-hover/panel:shadow-md transition-all duration-500">
+              <Library className="w-7 h-7 text-brand-purple" />
+            </div>
+            <h4 className="text-sm font-black text-slate-950 mb-3 uppercase tracking-tight leading-snug">
+              Clinical AI Handbook
+            </h4>
+            <p className="text-slate-500 text-[11px] font-medium leading-relaxed mb-6">
+              Physician-vetted insights on AI compliance, MIPS, and practice efficiency.
+            </p>
           </div>
-        </NavLink>
-      ))}
+        </div>
+
+        <div className="relative z-10 pt-8 border-t border-slate-200/60">
+          <Link
+            to="/resources"
+            onClick={onClose}
+            className="flex items-center justify-between group/link"
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-brand-purple">
+              Download guide
+            </span>
+            <div className="w-7 h-7 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple group-hover/link:bg-brand-purple group-hover/link:text-white transition-all duration-300">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -320,14 +783,14 @@ function ResourcesPanel({ onClose }: { onClose: () => void }) {
 // Nav items config
 // ─────────────────────────────────────────────
 
-type MenuKey = 'Specialties' | 'WhatWeDo' | 'AI' | 'WhoWeAre' | 'Resources';
+type MenuKey = "Specialties" | "WhatWeDo" | "AI" | "WhoWeAre" | "Resources";
 
 const NAV_LABELS: { key: MenuKey; label: string }[] = [
-  { key: 'Specialties', label: 'Specialties' },
-  { key: 'WhatWeDo',    label: 'What We Do' },
-  { key: 'AI',          label: 'AI Solutions' },
-  { key: 'WhoWeAre',    label: 'Who We Are' },
-  { key: 'Resources',   label: 'Resources' },
+  { key: "Specialties", label: "Specialties" },
+  { key: "WhatWeDo", label: "What We Do" },
+  { key: "AI", label: "Solutions" },
+  { key: "WhoWeAre", label: "Who We Are" },
+  { key: "Resources", label: "Resources" },
 ];
 
 // ─────────────────────────────────────────────
@@ -336,6 +799,7 @@ const NAV_LABELS: { key: MenuKey; label: string }[] = [
 
 export function Navbar() {
   const [open, setOpen] = useState<MenuKey | null>(null);
+  const [isScribeModalOpen, setIsScribeModalOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -345,8 +809,8 @@ export function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -355,8 +819,8 @@ export function Navbar() {
         setOpen(null);
       }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   // Hover intent helpers — small delay prevents accidental close on cursor path
@@ -369,7 +833,10 @@ export function Navbar() {
     closeTimer.current = setTimeout(() => setOpen(null), 120);
   }, []);
 
-  const closeMobile = () => { setMobileOpen(false); setMobileSection(null); };
+  const closeMobile = () => {
+    setMobileOpen(false);
+    setMobileSection(null);
+  };
   const closeDesktop = () => setOpen(null);
 
   return (
@@ -378,18 +845,25 @@ export function Navbar() {
         ref={navRef}
         className={`fixed w-full z-50 transition-all duration-500 ${
           scrolled || open
-            ? 'bg-slate-950/90 backdrop-blur-2xl border-b border-white/8 shadow-[0_8px_48px_rgba(0,0,0,0.5)]'
-            : 'bg-transparent border-b border-transparent'
+            ? "bg-white border-b border-slate-200 shadow-[0_8px_48px_rgba(0,0,0,0.06)]"
+            : "bg-[#FCFCFD]/80 backdrop-blur-3xl border-b border-slate-200/50"
         }`}
         onMouseLeave={handleMouseLeave}
       >
         {/* ── Top bar ── */}
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-[68px]">
-
             {/* Logo */}
-            <Link to="/" onClick={closeDesktop} className="shrink-0 transition-opacity hover:opacity-75 duration-200">
-              <img src="/src/assets/modmed-logo.svg" alt="ModMed" className="h-8 w-auto filter brightness-0 invert" />
+            <Link
+              to="/"
+              onClick={closeDesktop}
+              className="shrink-0 transition-all hover:opacity-80 active:scale-95 duration-200"
+            >
+              <img
+                src="/src/assets/modmed-logo.svg"
+                alt="ModMed"
+                className="h-[28px] w-auto opacity-100 brightness-100 contrast-125"
+              />
             </Link>
 
             {/* Desktop nav triggers */}
@@ -401,14 +875,16 @@ export function Navbar() {
                   onClick={() => setOpen(open === key ? null : key)}
                   className={`flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
                     open === key
-                      ? 'text-white'
-                      : 'text-slate-400 hover:text-white'
+                      ? "text-slate-900 bg-slate-100"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
                   {label}
                   <ChevronDown
                     className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      open === key ? 'rotate-180 text-brand-purple-light' : 'text-slate-600'
+                      open === key
+                        ? "rotate-180 text-brand-purple"
+                        : "text-slate-400"
                     }`}
                   />
                 </button>
@@ -416,24 +892,29 @@ export function Navbar() {
             </div>
 
             {/* Desktop CTAs */}
-            <div className="hidden lg:flex items-center gap-2">
-              <button className="flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/5">
-                <LogIn className="w-4 h-4" /> Log In
+            <div className="hidden lg:flex items-center gap-4 ml-8">
+              <button className="text-sm font-bold text-slate-600 hover:text-brand-purple transition-colors">
+                Log In
               </button>
               <Link to="/contact" onClick={closeDesktop}>
-                <button className="flex items-center gap-2 px-4 py-2 bg-brand-purple hover:bg-brand-purple-light text-white rounded-full text-sm font-semibold transition-all shadow-[0_0_14px_rgba(80,45,127,0.4)] hover:shadow-[0_0_22px_rgba(106,60,168,0.65)] hover:-translate-y-px">
-                  <CalendarCheck className="w-4 h-4" /> Book a Demo
+                <button className="relative group overflow-hidden px-6 py-2.5 bg-brand-purple hover:bg-brand-purple-light text-white rounded-full text-sm font-black transition-all shadow-[0_4px_12px_rgba(80,45,127,0.2)] hover:-translate-y-0.5 active:scale-95">
+                  <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  Book a Demo
                 </button>
               </Link>
             </div>
 
             {/* Mobile hamburger */}
             <button
-              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/8 transition-all text-slate-300 hover:text-white"
+              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 transition-all text-slate-600 hover:text-slate-900"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle navigation"
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -441,22 +922,35 @@ export function Navbar() {
         {/* ── Mega-menu dropdown panel ── */}
         {open && (
           <div
-            className="hidden lg:block absolute left-0 right-0 top-full border-t border-white/8 bg-slate-950/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.6)]"
-            onMouseEnter={() => { if (closeTimer.current) clearTimeout(closeTimer.current); }}
+            className="hidden lg:block absolute left-0 right-0 top-full border-t border-slate-200 bg-white/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.08)]"
+            onMouseEnter={() => {
+              if (closeTimer.current) clearTimeout(closeTimer.current);
+            }}
           >
             <div className="max-w-7xl mx-auto">
-              {open === 'Specialties' && <SpecialtiesPanel onClose={closeDesktop} />}
-              {open === 'WhatWeDo'    && <WhatWeDoPanel    onClose={closeDesktop} />}
-              {open === 'AI'          && <AIPanel          onClose={closeDesktop} />}
-              {open === 'WhoWeAre'    && <CompanyPanel     onClose={closeDesktop} />}
-              {open === 'Resources'   && <ResourcesPanel   onClose={closeDesktop} />}
+              {open === "Specialties" && (
+                <SpecialtiesPanel onClose={closeDesktop} />
+              )}
+              {open === "WhatWeDo" && <WhatWeDoPanel onClose={closeDesktop} />}
+              {open === "AI" && <SolutionsPanel onClose={closeDesktop} onOpenVideo={() => { setIsScribeModalOpen(true); closeDesktop(); }} />}
+              {open === "WhoWeAre" && <CompanyPanel onClose={closeDesktop} />}
+              {open === "Resources" && (
+                <ResourcesPanel onClose={closeDesktop} />
+              )}
             </div>
 
             {/* Bottom accent bar */}
-            <div className="h-px bg-gradient-to-r from-transparent via-brand-purple/40 to-transparent" />
+            <div className="h-px bg-linear-to-r from-transparent via-brand-purple/10 to-transparent" />
           </div>
         )}
       </nav>
+
+      <VideoModal 
+        isOpen={isScribeModalOpen}
+        onClose={() => setIsScribeModalOpen(false)}
+        wistiaId="6vnavaja1v"
+        title="ModMed Scribe 2.0 Presentation"
+      />
 
       {/* ══════════════════════════════════════════
           MOBILE DRAWER — unchanged
@@ -472,18 +966,26 @@ export function Navbar() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 z-50 lg:hidden flex flex-col bg-slate-950/95 backdrop-blur-xl border-r border-white/10 shadow-2xl transition-transform duration-300 ease-in-out ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 left-0 h-full w-80 z-50 lg:hidden flex flex-col bg-white/98 backdrop-blur-xl border-r border-slate-200 shadow-2xl transition-transform duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Drawer header */}
-        <div className="flex items-center justify-between px-5 h-[72px] border-b border-white/10 shrink-0">
-          <Link to="/" onClick={closeMobile}>
-            <img src="/src/assets/modmed-logo.svg" alt="ModMed" className="h-8 w-auto filter brightness-0 invert opacity-90" />
+        <div className="flex items-center justify-between px-6 h-[72px] border-b border-slate-100 shrink-0">
+          <Link
+            to="/"
+            onClick={closeMobile}
+            className="active:scale-95 transition-transform"
+          >
+            <img
+              src="/src/assets/modmed-logo.svg"
+              alt="ModMed"
+              className="h-[24px] w-auto opacity-100"
+            />
           </Link>
           <button
             onClick={closeMobile}
-            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -491,51 +993,137 @@ export function Navbar() {
 
         {/* Drawer body */}
         <div className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5">
-          <MobileSection label="Specialties" isOpen={mobileSection === 'Specialties'} onToggle={() => setMobileSection(mobileSection === 'Specialties' ? null : 'Specialties')}>
+          <MobileSection
+            label="Specialties"
+            isOpen={mobileSection === "Specialties"}
+            onToggle={() =>
+              setMobileSection(
+                mobileSection === "Specialties" ? null : "Specialties",
+              )
+            }
+          >
             {SPECIALTIES.map((s) => (
-              <NavLink key={s.href} to={s.href} onClick={closeMobile}
-                className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? 'text-brand-purple-light bg-brand-purple/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              <NavLink
+                key={s.href}
+                to={s.href}
+                onClick={closeMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? "text-brand-purple bg-brand-purple/10" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
                 <s.icon className="w-4 h-4 shrink-0" />
                 <span>{s.label}</span>
               </NavLink>
             ))}
           </MobileSection>
 
-          <MobileSection label="What We Do" isOpen={mobileSection === 'WhatWeDo'} onToggle={() => setMobileSection(mobileSection === 'WhatWeDo' ? null : 'WhatWeDo')}>
-            {SOLUTIONS.map((s) => (
-              <NavLink key={s.href} to={s.href} onClick={closeMobile}
-                className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? `${s.color} bg-white/5` : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
-                <s.icon className={`w-4 h-4 shrink-0 ${s.color}`} />
+          <MobileSection
+            label="What We Do"
+            isOpen={mobileSection === "WhatWeDo"}
+            onToggle={() =>
+              setMobileSection(mobileSection === "WhatWeDo" ? null : "WhatWeDo")
+            }
+          >
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 px-3 mt-2">
+              Products & Services
+            </div>
+            {PRODUCTS_SERVICES.map((s) => (
+              <NavLink
+                key={s.href}
+                to={s.href}
+                onClick={closeMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? `text-slate-950 font-bold bg-slate-100` : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
+                <span>{s.label}</span>
+              </NavLink>
+            ))}
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 px-3 mt-4">
+              Integrations
+            </div>
+            {INTEGRATIONS.map((s) => (
+              <NavLink
+                key={s.href}
+                to={s.href}
+                onClick={closeMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? `text-slate-950 font-bold bg-slate-100` : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
                 <span>{s.label}</span>
               </NavLink>
             ))}
           </MobileSection>
 
-          <MobileSection label="AI Solutions" isOpen={mobileSection === 'AI'} onToggle={() => setMobileSection(mobileSection === 'AI' ? null : 'AI')}>
-            {AI_PRODUCTS.map((p) => (
-              <NavLink key={p.href} to={p.href} onClick={closeMobile}
-                className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? 'text-brand-purple-light bg-brand-purple/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
-                <p.icon className="w-4 h-4 shrink-0 text-brand-purple-light" />
+          <MobileSection
+            label="Solutions"
+            isOpen={mobileSection === "AI"}
+            onToggle={() =>
+              setMobileSection(mobileSection === "AI" ? null : "AI")
+            }
+          >
+            {SOLUTIONS.map((p) => (
+              <NavLink
+                key={p.href}
+                to={p.href}
+                onClick={closeMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? "text-brand-purple bg-brand-purple/10" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
+                <p.icon className={`w-4 h-4 shrink-0 ${p.color}`} />
                 <span>{p.label}</span>
-                {p.featured && <span className="ml-auto px-1.5 py-0.5 rounded bg-brand-purple/30 text-[10px] font-bold text-brand-purple-light uppercase">New</span>}
               </NavLink>
             ))}
           </MobileSection>
 
-          <MobileSection label="Who We Are" isOpen={mobileSection === 'WhoWeAre'} onToggle={() => setMobileSection(mobileSection === 'WhoWeAre' ? null : 'WhoWeAre')}>
+          <MobileSection
+            label="Who We Are"
+            isOpen={mobileSection === "WhoWeAre"}
+            onToggle={() =>
+              setMobileSection(mobileSection === "WhoWeAre" ? null : "WhoWeAre")
+            }
+          >
             {COMPANY.map((item) => (
-              <NavLink key={item.href} to={item.href} onClick={closeMobile}
-                className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? 'text-brand-purple-light bg-brand-purple/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              <NavLink
+                key={item.href}
+                to={item.href}
+                onClick={closeMobile}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  item.href.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? "text-brand-purple bg-brand-purple/10" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
                 <item.icon className="w-4 h-4 shrink-0" />
                 <span>{item.label}</span>
               </NavLink>
             ))}
           </MobileSection>
 
-          <MobileSection label="Resources" isOpen={mobileSection === 'Resources'} onToggle={() => setMobileSection(mobileSection === 'Resources' ? null : 'Resources')}>
+          <MobileSection
+            label="Resources"
+            isOpen={mobileSection === "Resources"}
+            onToggle={() =>
+              setMobileSection(
+                mobileSection === "Resources" ? null : "Resources",
+              )
+            }
+          >
             {RESOURCES.map((item) => (
-              <NavLink key={item.href} to={item.href} onClick={closeMobile}
-                className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? 'text-brand-purple-light bg-brand-purple/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              <NavLink
+                key={item.href}
+                to={item.href}
+                onClick={closeMobile}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm ${isActive ? "text-brand-purple bg-brand-purple/10" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"}`
+                }
+              >
                 <item.icon className="w-4 h-4 shrink-0" />
                 <span>{item.label}</span>
               </NavLink>
@@ -544,14 +1132,14 @@ export function Navbar() {
         </div>
 
         {/* Drawer footer CTAs */}
-        <div className="shrink-0 border-t border-white/10 p-4 space-y-2">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-slate-300 hover:text-white rounded-xl hover:bg-white/5 transition-all">
+        <div className="shrink-0 border-t border-slate-100 p-4 space-y-2">
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-slate-600 hover:text-slate-950 rounded-xl hover:bg-slate-50 transition-all">
             <LogIn className="w-4 h-4" /> Log In
           </button>
           <Link to="/contact" onClick={closeMobile} className="block">
             <button
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-brand-purple hover:bg-brand-purple-light text-white rounded-xl text-sm font-semibold transition-all shadow-[0_0_14px_rgba(80,45,127,0.4)]"
-              onClick={() => navigate('/contact')}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-brand-purple hover:bg-brand-purple-light text-white rounded-xl text-sm font-semibold transition-all shadow-[0_0_14px_rgba(80,45,127,0.2)]"
+              onClick={() => navigate("/contact")}
             >
               <CalendarCheck className="w-4 h-4" /> Book a Demo
             </button>
@@ -565,22 +1153,34 @@ export function Navbar() {
 // ─────────────────────────────────────────────
 // Mobile accordion section (unchanged)
 // ─────────────────────────────────────────────
-function MobileSection({ label, isOpen, onToggle, children }: {
-  label: string; isOpen: boolean; onToggle: () => void; children: React.ReactNode;
+function MobileSection({
+  label,
+  isOpen,
+  onToggle,
+  children,
+}: {
+  label: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="border-b border-slate-50 last:border-0">
       <button
         onClick={onToggle}
-        className={`w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-semibold transition-all ${
-          isOpen ? 'text-white bg-white/5' : 'text-slate-300 hover:text-white hover:bg-white/5'
+        className={`w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-sm font-bold transition-all ${
+          isOpen
+            ? "text-slate-900 bg-slate-50"
+            : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
         }`}
       >
         {label}
-        <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180 text-slate-400' : ''}`} />
+        <ChevronDown
+          className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-brand-purple" : ""}`}
+        />
       </button>
       {isOpen && (
-        <div className="ml-2 pl-3 border-l border-white/8 mt-1 mb-2 space-y-0.5">
+        <div className="ml-2 pl-3 border-l border-slate-200 mt-1 mb-3 space-y-0.5">
           {children}
         </div>
       )}

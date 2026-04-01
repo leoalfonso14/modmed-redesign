@@ -137,7 +137,7 @@ export function Chatbox() {
         <button
           onClick={() => setIsOpen((o) => !o)}
           aria-label={isOpen ? 'Close ModMed AI' : 'Open ModMed AI assistant'}
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_0_24px_rgba(80,45,127,0.6)] hover:shadow-[0_0_32px_rgba(106,60,168,0.8)] transition-all duration-200 hover:scale-105 focus:outline-none"
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_12px_24px_rgba(80,45,127,0.4)] hover:shadow-[0_12px_32px_rgba(106,60,168,0.6)] transition-all duration-300 hover:scale-105 focus:outline-none"
         >
           <AnimatePresence mode="wait" initial={false}>
             {isOpen ? (
@@ -163,7 +163,7 @@ export function Chatbox() {
           {hasNewMessage && !isOpen && (
             <motion.div
               initial={{ scale: 0 }} animate={{ scale: 1 }}
-              className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-slate-950"
+              className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white"
             />
           )}
         </button>
@@ -178,39 +178,34 @@ export function Chatbox() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed bottom-24 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-950/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.7)]"
-            style={{ width: '360px', height: '520px' }}
+            className="fixed bottom-24 right-6 z-50 flex flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white/95 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.12)]"
+            style={{ width: '380px', height: '560px' }}
             role="dialog"
             aria-label="ModMed AI Assistant"
           >
             {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/8 bg-brand-purple/10 shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-purple/30 border border-brand-purple/50">
-                <Sparkles className="w-4 h-4 text-brand-purple-light" />
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-purple/10 border border-brand-purple/5 shadow-sm">
+                <Sparkles className="w-5 h-5 text-brand-purple" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-white leading-none">ModMed AI</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">Powered by Gemini · Always on</p>
+                <p className="text-sm font-black text-slate-900 leading-none uppercase tracking-tight">ModMed AI</p>
+                <p className="text-[10px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">Specialty Intelligence</p>
               </div>
-              <div className="flex items-center gap-1.5">
-                {/* Online indicator */}
-                <div className="flex items-center gap-1.5 mr-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-                  <span className="text-[10px] text-slate-400 font-medium">Online</span>
-                </div>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsConfirmingReset(true)}
                   title="Clear conversation"
-                  className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                  className="w-8 h-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
                   title="Close"
-                  className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-500 hover:text-white hover:bg-white/8 transition-colors"
+                  className="w-8 h-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -222,17 +217,17 @@ export function Chatbox() {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden border-b border-red-500/20 bg-red-500/8 shrink-0"
+                  className="overflow-hidden border-b border-red-100 bg-red-50 shrink-0"
                 >
-                  <div className="flex flex-col gap-3 p-4 text-sm">
-                    <p className="text-center text-slate-200 font-medium">Clear this conversation?</p>
+                  <div className="flex flex-col gap-3 p-5 text-sm">
+                    <p className="text-center text-slate-900 font-bold">Clear this conversation?</p>
                     <div className="flex justify-center gap-3">
                       <button onClick={() => setIsConfirmingReset(false)}
-                        className="px-4 py-1.5 rounded-lg border border-white/10 text-slate-300 hover:text-white hover:bg-white/5 transition-colors text-xs font-semibold">
+                        className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-white transition-colors text-xs font-black uppercase tracking-widest">
                         Cancel
                       </button>
                       <button onClick={confirmReset}
-                        className="px-4 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors text-xs font-semibold">
+                        className="px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white transition-colors text-xs font-black uppercase tracking-widest">
                         Clear it
                       </button>
                     </div>
@@ -242,28 +237,28 @@ export function Chatbox() {
             </AnimatePresence>
 
             {/* Messages area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+            <div className="flex-1 overflow-y-auto p-5 space-y-5 scrollbar-thin">
               {messages.length === 0 ? (
                 /* Empty state */
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5 pt-4">
                   {/* Welcome message */}
-                  <div className="flex gap-2.5">
-                    <div className="w-7 h-7 shrink-0 rounded-xl bg-brand-purple/30 border border-brand-purple/40 flex items-center justify-center mt-0.5">
-                      <Bot className="w-3.5 h-3.5 text-brand-purple-light" />
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mt-0.5 shadow-sm">
+                      <Bot className="w-4 h-4 text-brand-purple" />
                     </div>
-                    <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-slate-800/60 border border-white/5 px-3.5 py-2.5 text-sm text-slate-200 leading-relaxed">
-                      Hi! 👋 I'm <span className="text-brand-purple-light font-semibold">ModMed AI</span>. Ask me about our EHR, specialties, AI solutions, billing, or anything else — I'm here to help.
+                    <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-slate-50 border border-slate-100 px-4 py-3 text-sm text-slate-700 leading-relaxed font-medium">
+                      Hi! 👋 I'm <span className="text-brand-purple font-black">ModMed AI</span>. Ask me about our EHR, AI solutions, or how we support your specialty.
                     </div>
                   </div>
 
                   {/* Suggested prompts */}
-                  <div className="flex flex-wrap gap-2 pl-9">
+                  <div className="flex flex-wrap gap-2.5 pl-11">
                     {SUGGESTED_PROMPTS.map((prompt) => (
                       <button
                         key={prompt}
                         onClick={() => { if (!isLoading) sendMessage({ text: prompt }); }}
                         disabled={isLoading}
-                        className="rounded-full border border-white/10 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-300 hover:border-brand-purple/50 hover:bg-brand-purple/10 hover:text-brand-purple-light transition-all disabled:opacity-50"
+                        className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-[11px] text-slate-600 font-bold hover:border-brand-purple/40 hover:text-brand-purple hover:bg-brand-purple/5 transition-all shadow-sm active:scale-95 disabled:opacity-50"
                       >
                         {prompt}
                       </button>
@@ -281,17 +276,17 @@ export function Chatbox() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2 }}
-                      className={`flex gap-2.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+                      className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                     >
                       {!isUser && (
-                        <div className="w-7 h-7 shrink-0 rounded-xl bg-brand-purple/30 border border-brand-purple/40 flex items-center justify-center mt-0.5">
-                          <Bot className="w-3.5 h-3.5 text-brand-purple-light" />
+                        <div className="w-8 h-8 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mt-0.5 shadow-sm">
+                          <Bot className="w-4 h-4 text-brand-purple" />
                         </div>
                       )}
-                      <div className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                      <div className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed font-medium ${
                         isUser
-                          ? 'rounded-tr-sm bg-brand-purple text-white shadow-[0_0_12px_rgba(80,45,127,0.4)]'
-                          : 'rounded-tl-sm bg-slate-800/60 border border-white/5 text-slate-200'
+                          ? 'rounded-tr-sm bg-brand-purple text-white shadow-[0_8px_16px_rgba(80,45,127,0.2)]'
+                          : 'rounded-tl-sm bg-slate-50 border border-slate-100 text-slate-700'
                       }`}>
                         {text ? <FormattedMessage text={text} /> : <span className="opacity-40 italic text-xs">...</span>}
                       </div>
@@ -304,12 +299,12 @@ export function Chatbox() {
               {isLoading && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                  className="flex gap-2.5"
+                  className="flex gap-3"
                 >
-                  <div className="w-7 h-7 shrink-0 rounded-xl bg-brand-purple/30 border border-brand-purple/40 flex items-center justify-center mt-0.5">
-                    <Bot className="w-3.5 h-3.5 text-brand-purple-light" />
+                  <div className="w-8 h-8 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mt-0.5 shadow-sm">
+                    <Bot className="w-4 h-4 text-brand-purple" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-slate-800/60 border border-white/5 px-3.5 py-2.5">
+                  <div className="rounded-2xl rounded-tl-sm bg-slate-50 border border-slate-100 px-4 py-3">
                     <TypingDots />
                   </div>
                 </motion.div>
@@ -317,13 +312,13 @@ export function Chatbox() {
 
               {/* Error state */}
               {error && (
-                <div className="flex gap-2.5">
-                  <div className="w-7 h-7 shrink-0 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center mt-0.5">
-                    <AlertCircle className="w-3.5 h-3.5 text-red-400" />
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 shrink-0 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center mt-0.5">
+                    <AlertCircle className="w-4 h-4 text-red-500" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-red-500/8 border border-red-500/20 px-3.5 py-2.5 text-sm">
-                    <p className="text-red-300 font-medium text-xs">Connection error</p>
-                    <p className="text-slate-400 text-xs mt-0.5">{error.message || 'Could not reach the API.'}</p>
+                  <div className="rounded-2xl rounded-tl-sm bg-red-50 border border-red-100 px-4 py-3 text-sm">
+                    <p className="text-red-600 font-black uppercase tracking-widest text-[10px]">Connection Error</p>
+                    <p className="text-slate-500 text-xs mt-1 font-medium">{error.message || 'Could not reach the AI service.'}</p>
                   </div>
                 </div>
               )}
@@ -334,7 +329,7 @@ export function Chatbox() {
             {/* Input */}
             <form
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 px-3 py-3 border-t border-white/8 bg-slate-900/40 shrink-0"
+              className="flex items-center gap-3 px-5 py-5 border-t border-slate-100 bg-white shrink-0"
             >
               <input
                 type="text"
@@ -342,15 +337,15 @@ export function Chatbox() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask ModMed AI anything…"
                 disabled={isLoading}
-                className="flex-1 rounded-xl border border-white/10 bg-slate-800/60 px-4 py-2 text-sm text-white placeholder-slate-500 focus:border-brand-purple/50 focus:outline-none focus:ring-1 focus:ring-brand-purple/30 disabled:opacity-60 transition-colors"
+                className="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm text-slate-900 font-medium placeholder-slate-400 focus:border-brand-purple/40 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-purple/5 disabled:opacity-60 transition-all"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 aria-label="Send"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-purple hover:bg-brand-purple-light text-white transition-all hover:shadow-[0_0_12px_rgba(80,45,127,0.6)] disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-purple hover:bg-brand-purple-light text-white transition-all shadow-lg shadow-brand-purple/20 active:scale-95 disabled:opacity-40 disabled:shadow-none"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5" />
               </button>
             </form>
           </motion.div>

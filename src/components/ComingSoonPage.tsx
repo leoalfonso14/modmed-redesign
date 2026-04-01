@@ -20,7 +20,7 @@ export function ComingSoonPage({
   badge = 'Coming Soon',
 }: ComingSoonPageProps) {
   return (
-    <Section className="min-h-[80vh] flex items-center justify-center text-center py-40">
+    <Section className="min-h-[85vh] flex items-center justify-center text-center py-40 overflow-hidden bg-white">
       <div className="max-w-xl mx-auto">
         <Badge variant="brand" className="mb-6 mx-auto w-fit">
           {badge}
@@ -32,11 +32,11 @@ export function ComingSoonPage({
           </GlassPanel>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
+        <h1 className="text-4xl sm:text-7xl font-black text-slate-950 mb-6 leading-tight tracking-tight">
           {title}
         </h1>
 
-        <p className="text-slate-400 text-lg leading-relaxed mb-10">
+        <p className="text-slate-600 text-lg leading-relaxed mb-12 font-medium max-w-lg mx-auto">
           {description}
         </p>
 
@@ -49,9 +49,9 @@ export function ComingSoonPage({
           </Link>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-6 py-2.5 glass-panel text-white rounded-full font-semibold text-sm hover:bg-white/10 transition-all border border-slate-700 hover:border-slate-500 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-50 hover:bg-slate-100 text-slate-900 rounded-full font-bold text-sm transition-all border border-slate-200 hover:border-slate-300 shadow-sm hover:-translate-y-0.5"
           >
-            <CalendarDays className="w-4 h-4" /> Book a Demo
+            <CalendarDays className="w-4 h-4 text-brand-purple" /> Book a Demo
           </Link>
         </div>
       </div>

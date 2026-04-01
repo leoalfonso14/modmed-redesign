@@ -26,11 +26,11 @@ export function Button({
   };
 
   const variantStyles = {
-    primary: "bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_0_15px_rgba(80,45,127,0.5)] hover:shadow-[0_0_25px_rgba(106,60,168,0.7)]",
-    secondary: "bg-brand-purple/20 hover:bg-brand-purple/30 text-brand-purple-light border border-brand-purple/30",
-    ghost: "text-slate-300 hover:text-white hover:bg-white/5",
-    glass: "glass-panel text-white hover:bg-white/10 border border-slate-700 hover:border-slate-500",
-    white: "bg-white text-slate-950 hover:bg-slate-200 shadow-xl"
+    primary: "bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_4px_14px_rgba(80,45,127,0.2)] hover:shadow-[0_6px_20px_rgba(106,60,168,0.35)]",
+    secondary: "bg-brand-purple/10 hover:bg-brand-purple/20 text-brand-purple border border-brand-purple/20",
+    ghost: "text-slate-600 hover:text-slate-950 hover:bg-slate-100",
+    glass: "bg-white/40 backdrop-blur-xl text-slate-900 hover:bg-white/60 border border-slate-200 shadow-sm",
+    white: "bg-white text-slate-950 hover:bg-slate-50 border border-slate-200 shadow-md"
   };
 
   return (

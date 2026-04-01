@@ -1,4 +1,5 @@
 import { Section } from './ui/Section';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export function Stats() {
   const stats = [
@@ -9,19 +10,25 @@ export function Stats() {
   ];
 
   return (
-    <Section className="border-y border-white/5 bg-brand-purple-dark/5">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
+    <Section className="bg-slate-50 border-y border-slate-100 py-16">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
         {stats.map((stat, i) => (
-          <div key={i} className="px-4">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-2">
+          <ScrollReveal key={i} variant="fade" delay={i * 0.1}>
+            <div className="px-4 relative group">
+            <div className="text-4xl md:text-6xl font-black text-slate-950 mb-3 tracking-tighter group-hover:scale-110 transition-transform duration-500">
               {stat.value}
             </div>
-            <div className="text-sm text-slate-400 uppercase tracking-wide font-medium">
+            <div className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-black leading-none">
               {stat.label}
             </div>
+            {/* Subtle separator for desktop */}
+            {i < stats.length - 1 && (
+              <div className="hidden md:block absolute -right-6 top-1/2 -translate-y-1/2 w-px h-12 bg-slate-200" />
+            )}
           </div>
-        ))}
-      </div>
+        </ScrollReveal>
+      ))}
+    </div>
     </Section>
   );
 }

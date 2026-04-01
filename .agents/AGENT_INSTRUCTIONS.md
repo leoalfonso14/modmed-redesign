@@ -100,6 +100,10 @@ export default function Component() {} // don't do this
 <div className="animate-[fadeInUp_0.8s_ease-out_0.3s_both]" /> {/* CTA row */}
 ```
 
+### Scroll Reveal (Mandatory for all primary sections):
+- Always wrap section content in `<ScrollReveal>` to ensure a premium, coordinated entry as the user scrolls.
+- Use `framer-motion` for complex interactive transitions, but stick to the `ScrollReveal` component for standard page flow.
+
 ### Hover effects (always include):
 ```tsx
 // Cards

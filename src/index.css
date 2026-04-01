@@ -32,7 +32,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-50 font-sans antialiased overflow-x-hidden selection:bg-brand-purple selection:text-white;
+    @apply bg-[#FCFCFD] text-slate-900 font-sans antialiased overflow-x-hidden selection:bg-brand-purple selection:text-white;
   }
   
   button {
@@ -50,11 +50,11 @@
 
 @layer utilities {
   .glass-panel {
-    @apply bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+    @apply bg-white/40 backdrop-blur-2xl border border-slate-200/60 shadow-[0_8px_32px_0_rgba(0,0,0,0.04)];
   }
   
   .glass-panel-light {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-[0_8px_32px_0_rgba(255,255,255,0.05)];
+    @apply bg-white/10 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.02)];
   }
 
   .text-glow {

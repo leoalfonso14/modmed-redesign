@@ -11,8 +11,8 @@ export function GlassPanel({
   hoverable = false,
   padding = 'md'
 }: GlassPanelProps) {
-  const baseStyles = "glass-panel rounded-3xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] transition-all duration-300";
-  const hoverStyles = hoverable ? "hover:-translate-y-2 hover:bg-white/5 hover:border-white/20" : "";
+  const baseStyles = "bg-white/70 backdrop-blur-3xl rounded-3xl border border-slate-100 shadow-[0_8px_48px_rgba(0,0,0,0.04)] transition-all duration-300 relative overflow-hidden";
+  const hoverStyles = hoverable ? "hover:-translate-y-1.5 hover:bg-white/90 hover:border-slate-200 hover:shadow-[0_32px_64px_rgba(0,0,0,0.06)]" : "";
   
   const paddingStyles = {
     none: "",

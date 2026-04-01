@@ -16,6 +16,7 @@ import {
 import { Section } from './ui/Section';
 import { Badge } from './ui/Badge';
 import { GradientText } from './ui/GradientText';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 const SPECIALTIES = [
   { name: 'Dermatology',      slug: 'dermatology',      icon: Layers,          color: 'text-orange-400', bg: 'bg-orange-500/10',  border: 'border-orange-500/20',  glow: 'bg-orange-500',  desc: 'Tap-and-go precision charting' },
@@ -33,60 +34,71 @@ const SPECIALTIES = [
 
 export function SpecialtyGrid() {
   return (
-    <Section id="specialties" className="bg-slate-950/50">
-      <div className="text-center mb-16">
-        <Badge variant="brand" className="mb-4">Specialized for You</Badge>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Built for specialists, <GradientText>by specialists</GradientText>
+    <Section id="specialties" className="bg-white">
+      <div className="text-center mb-16 px-4">
+        <Badge variant="glow" className="mb-4">Specialized Intelligence</Badge>
+        <h2 className="text-3xl sm:text-5xl font-bold text-slate-950 mb-6 tracking-tight">
+          Built for specialists, <GradientText glow={false}>by specialists</GradientText>
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-          We don't do "general." Each of our 11 clinical specialties features a workflow designed by doctors in that field.
+        <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
+          We don't do "general." Each of our clinical specialties features a workflow designed by practicing physicians in that field.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {SPECIALTIES.map((spec) => {
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 px-4">
+        {SPECIALTIES.map((spec, i) => {
           const Icon = spec.icon;
           return (
-            <Link
+            <ScrollReveal 
               key={spec.slug}
-              to={`/specialties/${spec.slug}`}
-              className="group relative flex flex-col items-center text-center p-5 rounded-2xl border border-white/5 bg-slate-900/40 backdrop-blur-sm
-                hover:border-white/15 hover:bg-slate-800/40 hover:-translate-y-1
-                transition-all duration-300"
+              variant="slide"
+              direction={i % 2 === 0 ? "up" : "down"}
+              delay={(i % 6) * 0.05}
+              className="h-full"
             >
+              <Link
+                to={`/specialties/${spec.slug}`}
+                className="group relative flex flex-col items-center text-center p-6 rounded-3xl border border-slate-100 bg-white/60 backdrop-blur-sm
+                  hover:border-slate-200 hover:bg-white hover:shadow-xl hover:-translate-y-1.5
+                  transition-all duration-500 ease-out h-full"
+              >
               {/* Icon container */}
-              <div className="relative mb-4">
-                <div className={`w-12 h-12 rounded-xl ${spec.bg} border ${spec.border} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className={`w-6 h-6 ${spec.color}`} />
+              <div className="relative mb-5">
+                <div className={`w-14 h-14 rounded-2xl ${spec.bg} border ${spec.border} flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
+                  <Icon className={`w-7 h-7 ${spec.color}`} />
                 </div>
-                {/* Glow on hover */}
-                <div className={`absolute inset-0 ${spec.glow} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10`} />
+                {/* Subtle soft glow on hover */}
+                <div className={`absolute inset-0 ${spec.glow} rounded-2xl blur-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10`} />
               </div>
 
-              <h3 className={`text-sm font-bold text-slate-100 group-hover:${spec.color} transition-colors duration-200 mb-1.5`}>
+              <h3 className={`text-sm font-black text-slate-900 group-hover:text-brand-purple transition-colors duration-300 mb-2 uppercase tracking-tight`}>
                 {spec.name}
               </h3>
-              <p className="text-[11px] text-slate-500 leading-tight mb-3">
+              <p className="text-[11px] text-slate-500 leading-normal mb-4 font-medium">
                 {spec.desc}
               </p>
 
               {/* Explore arrow — reveals on hover */}
-              <span className={`flex items-center gap-1 text-[11px] font-semibold ${spec.color} opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200`}>
-                Explore <ArrowRight className="w-3 h-3" />
-              </span>
+              <div className="mt-auto">
+                <span className={`inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-brand-purple opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300`}>
+                  Explore <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
             </Link>
-          );
-        })}
+          </ScrollReveal>
+        );
+      })}
 
-        {/* "View All" tile — XL only */}
+        {/* "View All" tile — visible on larger screens */}
         <Link
           to="/specialties/dermatology"
-          className="hidden xl:flex flex-col items-center justify-center p-6 rounded-2xl bg-brand-purple/10 border border-brand-purple/20 hover:bg-brand-purple/20 hover:border-brand-purple/40 hover:-translate-y-1 transition-all duration-300 group text-center"
+          className="flex flex-col items-center justify-center p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 group text-center"
         >
-          <span className="text-xs font-bold text-white block mb-1">View All</span>
-          <span className="text-[10px] text-brand-purple-light font-bold uppercase tracking-widest">Specialties</span>
-          <ArrowRight className="w-4 h-4 text-brand-purple-light mt-3 group-hover:translate-x-1 transition-transform" />
+          <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-4 group-hover:border-brand-purple transition-colors">
+            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-brand-purple transition-colors" />
+          </div>
+          <span className="text-xs font-black text-slate-900 block mb-1 uppercase tracking-tighter">View All</span>
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Specialties</span>
         </Link>
       </div>
     </Section>

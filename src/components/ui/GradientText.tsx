@@ -9,7 +9,7 @@ export function GradientText({
   className = '',
   glow = true
 }: GradientTextProps) {
-  const baseStyles = "text-transparent bg-clip-text bg-linear-to-r from-brand-purple-light to-[#A975FF]";
+  const baseStyles = "text-transparent bg-clip-text bg-linear-to-r from-slate-900 to-slate-600 font-bold";
   const glowStyles = glow ? "text-glow" : "";
 
   return (

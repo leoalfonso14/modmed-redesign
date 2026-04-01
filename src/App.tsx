@@ -22,6 +22,7 @@ import { ScribePage } from './paths/solutions/ai/scribe';
 
 // Who We Are
 import { AboutPage } from './paths/who-we-are/about';
+import { EventsPage } from './paths/who-we-are/events';
 import { NewsPage } from './paths/who-we-are/news';
 import { CareersPage } from './paths/who-we-are/careers';
 
@@ -62,6 +63,7 @@ export default function App() {
 
           {/* Who We Are */}
           <Route path="/who-we-are/about" element={<AboutPage />} />
+          <Route path="/who-we-are/events" element={<EventsPage />} />
           <Route path="/who-we-are/news" element={<NewsPage />} />
           <Route path="/who-we-are/careers" element={<CareersPage />} />
 

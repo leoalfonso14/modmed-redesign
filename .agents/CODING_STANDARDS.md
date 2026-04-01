@@ -147,6 +147,11 @@ Usage in Tailwind:
 - All `<button>` elements: `cursor-pointer` is applied globally via `src/index.css`
 - All clickable non-button elements (divs, links acting as buttons): must add `cursor-pointer` explicitly
 
+### Accessibility & Contrast
+- **Visual Contrast**: Text colors must never be too similar to background colors.
+- **Standards**: Maintain WCAG AA compliance (4.5:1 ratio for normal text, 3.1:1 for large text).
+- **Tooling**: Use browser devtools' accessibility inspectors to verify contrast during implementation.
+
 ---
 
 ## 5. Design System Primitives
