@@ -3,7 +3,7 @@ import { useChat, type UIMessage } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Sparkles, X, Trash2, Send, Bot, AlertCircle } from 'lucide-react';
+import { X, Trash2, Send, Bot, AlertCircle, MessageSquareText } from 'lucide-react';
 
 // ─── localStorage helpers (12-hour TTL) ──────────────────────────────────────
 
@@ -23,7 +23,11 @@ function loadMessages(): UIMessage[] {
 }
 
 function saveMessages(messages: UIMessage[]) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, savedAt: Date.now() })); } catch {}
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, savedAt: Date.now() }));
+  } catch (error) {
+    console.warn('[Chatbox] Failed to save chat history to localStorage:', error);
+  }
 }
 
 // ─── Suggested prompts ───────────────────────────────────────────────────────
@@ -134,39 +138,73 @@ export function Chatbox() {
     <>
       {/* ── Floating toggle button ────────────────────────────────────── */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-        <button
-          onClick={() => setIsOpen((o) => !o)}
-          aria-label={isOpen ? 'Close ModMed AI' : 'Open ModMed AI assistant'}
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_12px_24px_rgba(80,45,127,0.4)] hover:shadow-[0_12px_32px_rgba(106,60,168,0.6)] transition-all duration-300 hover:scale-105 focus:outline-none"
+        <motion.div
+          animate={!isOpen ? { y: [0, -6, 0] } : { y: 0 }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="relative"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {isOpen ? (
-              <motion.span key="close"
-                initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                transition={{ duration: 0.18 }}>
-                <X className="w-6 h-6" />
-              </motion.span>
-            ) : (
-              <motion.span key="open"
-                initial={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: -90, opacity: 0, scale: 0.6 }}
-                transition={{ duration: 0.18 }}>
-                <Sparkles className="w-6 h-6" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-
-          {/* Unread dot */}
-          {hasNewMessage && !isOpen && (
+          {/* Pulsing Outer Ring (Clinical Glow) */}
+          {!isOpen && (
             <motion.div
-              initial={{ scale: 0 }} animate={{ scale: 1 }}
-              className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white"
+              animate={{ 
+                scale: [1, 1.4, 1.6], 
+                opacity: [0.4, 0.2, 0] 
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity, 
+                ease: "easeOut" 
+              }}
+              className="absolute inset-0 rounded-full bg-brand-purple/40 pointer-events-none"
             />
           )}
-        </button>
+
+          <button
+            onClick={() => setIsOpen((o) => !o)}
+            aria-label={isOpen ? 'Close ModMed AI' : 'Open ModMed AI assistant'}
+            className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple hover:bg-brand-purple-light text-white shadow-[0_12px_24px_rgba(80,45,127,0.4)] hover:shadow-[0_12px_32px_rgba(106,60,168,0.6)] transition-all duration-300 hover:scale-110 focus:outline-none z-10"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {isOpen ? (
+                <motion.span key="close"
+                  initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.18 }}>
+                  <X className="w-6 h-6" />
+                </motion.span>
+              ) : (
+                <motion.span key="open"
+                  initial={{ rotate: 90, opacity: 0, scale: 0.6 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: -90, opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.18 }}>
+                  <MessageSquareText className="w-6 h-6" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+
+            {/* Unread badge with pulse */}
+            {hasNewMessage && !isOpen && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                }} 
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut"
+                }}
+                className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white z-20"
+              />
+            )}
+          </button>
+        </motion.div>
       </div>
 
       {/* ── Chat panel ────────────────────────────────────────────────── */}
@@ -185,8 +223,8 @@ export function Chatbox() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-purple/10 border border-brand-purple/5 shadow-sm">
-                <Sparkles className="w-5 h-5 text-brand-purple" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white shadow-xs">
+                <Bot className="w-5 h-5 text-brand-purple" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-black text-slate-900 leading-none uppercase tracking-tight">ModMed AI</p>

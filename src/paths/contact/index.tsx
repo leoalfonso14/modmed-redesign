@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '../../components/ui/Badge';
 import { GradientText } from '../../components/ui/GradientText';
+import { SEO } from '../../components/ui/SEO';
 import { Link } from 'react-router-dom';
 
 // ─────────────────────────────────────────────
@@ -210,8 +211,11 @@ export function ContactPage() {
   };
 
   return (
-    <div className="min-h-[100vh] pt-32 pb-24 bg-[#FCFCFD] relative overflow-hidden flex items-center">
-      
+    <div className="min-h-screen pt-32 pb-24 bg-[#FCFCFD] relative overflow-hidden flex items-center">
+      <SEO 
+        title="Contact Us | Book a Demo" 
+        description="Ready to modernize your practice? Contact ModMed to schedule a personalized demo and see our specialty-specific clinical solutions in action."
+      />
       {/* ─────────────────────────────────────────────
           Responsive Background Ambient Elements 
       ───────────────────────────────────────────── */}

@@ -1,4 +1,5 @@
 import { BrainCircuit, Server, MessageSquare, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Section } from "./ui/Section";
 import { Badge } from "./ui/Badge";
 import { Button } from "./ui/Button";
@@ -12,6 +13,7 @@ export function Solutions() {
       color: "text-brand-purple",
       bg: "bg-brand-purple/5",
       border: "border-brand-purple/10",
+      href: "/what-we-do/ehr",
       description:
         "Practice-specific AI that adapts to your charting style, dramatically reducing screen time.",
       image:
@@ -23,6 +25,7 @@ export function Solutions() {
       color: "text-blue-600",
       bg: "bg-blue-50/50",
       border: "border-blue-100",
+      href: "/what-we-do/practice-management",
       description:
         "Streamline medical billing, scheduling, and office flow with intuitive, automated tools.",
       image:
@@ -34,6 +37,7 @@ export function Solutions() {
       color: "text-emerald-600",
       bg: "bg-emerald-50/50",
       border: "border-emerald-100",
+      href: "/what-we-do/patient-experience",
       description:
         "Transform patient interactions into seamless, digital experiences from check-in to follow-up.",
       image:
@@ -88,13 +92,15 @@ export function Solutions() {
               {feature.description}
             </p>
 
-            <Button
-              variant="ghost"
-              icon={ArrowRight}
-              className={`p-0 h-auto font-black text-xs uppercase tracking-widest ${feature.color} border-0 hover:bg-transparent hover:translate-x-1`}
-            >
-              Learn more
-            </Button>
+            <Link to={feature.href}>
+              <Button
+                variant="ghost"
+                icon={ArrowRight}
+                className={`p-0 h-auto font-black text-xs uppercase tracking-widest ${feature.color} border-0 hover:bg-transparent hover:translate-x-1`}
+              >
+                Learn more
+              </Button>
+            </Link>
           </ScrollReveal>
         ))}
       </div>

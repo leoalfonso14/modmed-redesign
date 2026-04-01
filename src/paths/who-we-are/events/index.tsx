@@ -1,8 +1,10 @@
-import { Calendar, MapPin, Monitor, ArrowRight, Sparkles, Star, Users } from 'lucide-react';
+import { Calendar, MapPin, Monitor, Sparkles, Star, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '../../../components/ui/Button';
 import { Badge } from '../../../components/ui/Badge';
 import { GradientText } from '../../../components/ui/GradientText';
 import { ScrollReveal } from '../../../components/ui/ScrollReveal';
+import { SEO } from '../../../components/ui/SEO';
 
 const EVENTS = [
   {
@@ -67,6 +69,10 @@ export function EventsPage() {
 
   return (
     <div className="bg-white min-h-screen pt-24">
+      <SEO 
+        title="Clinical Events & Conferences" 
+        description="Join ModMed at major medical conferences and specialty-specific events. Meet our experts and see the future of specialty healthcare in person."
+      />
       {/* ── Hero ── */}
       <section className="relative py-20 px-6 sm:px-8 border-b border-slate-50 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(80,45,127,0.03),transparent)] pointer-events-none" />
@@ -95,8 +101,12 @@ export function EventsPage() {
 
           <ScrollReveal variant="zoom" delay={0.3}>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" icon={Monitor}>Virtual Webinar Tour</Button>
-              <Button size="lg" variant="glass">Past Event Highlights</Button>
+              <Link to="/resources/webinars">
+                <Button size="lg" icon={Monitor}>Virtual Webinar Tour</Button>
+              </Link>
+              <Link to="/resources/success-stories">
+                <Button size="lg" variant="glass">Past Event Highlights</Button>
+              </Link>
             </div>
           </ScrollReveal>
         </div>
@@ -146,9 +156,11 @@ export function EventsPage() {
                     </div>
                   </div>
                   
-                  <Button variant="white" size="lg" className="px-10 h-14 text-base">
-                    Register Now
-                  </Button>
+                  <Link to="/contact">
+                    <Button variant="white" size="lg" className="px-10 h-14 text-base">
+                      Register Now
+                    </Button>
+                  </Link>
                 </div>
                 
                 {/* Visual Accent */}
@@ -220,13 +232,10 @@ export function EventsPage() {
                       </div>
                     </div>
 
-                    <div className="mt-8">
-                      <button className="flex items-center justify-between w-full p-4 rounded-2xl bg-slate-50 group-hover:bg-brand-purple group-hover:text-white transition-all duration-500 overflow-hidden relative">
-                        <span className="relative z-10 text-[10px] font-black uppercase tracking-widest">Booth Map & Info</span>
-                        <ArrowRight className="relative z-10 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                        <div className="absolute inset-0 bg-linear-to-r from-brand-purple-light to-brand-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </button>
-                    </div>
+                    <div className="mt-8 flex items-center gap-2 text-[10px] font-black text-brand-purple uppercase tracking-[0.2em]">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>{event.location}</span>
+                      </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -249,8 +258,12 @@ export function EventsPage() {
             one-on-one demonstration tailored to your specialty.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="h-16 px-10 text-base shadow-2xl">Book a Demo Today</Button>
-            <Button size="lg" variant="glass" className="h-16 px-10 text-base" icon={Monitor}>Watch Recorded Sessions</Button>
+            <Link to="/contact">
+              <Button size="lg" className="h-16 px-10 text-base shadow-2xl">Book a Demo Today</Button>
+            </Link>
+            <Link to="/resources/webinars">
+              <Button size="lg" variant="glass" className="h-16 px-10 text-base" icon={Monitor}>Watch Recorded Sessions</Button>
+            </Link>
           </div>
         </div>
       </section>

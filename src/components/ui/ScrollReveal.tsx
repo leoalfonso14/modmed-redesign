@@ -35,7 +35,7 @@ export function ScrollReveal({
       case 'blur':
         return { ...base, filter: 'blur(10px)', y: 20 };
       case 'slide':
-      default:
+      default: {
         const directions = {
           up: { y: distance },
           down: { y: -distance },
@@ -43,6 +43,7 @@ export function ScrollReveal({
           right: { x: -distance }
         };
         return { ...base, ...directions[direction], scale: 0.985 };
+      }
     }
   };
 

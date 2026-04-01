@@ -53,7 +53,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link to="/" className="inline-block mb-6">
               <img
-                src="/src/assets/modmed-logo.svg"
+                src="/modmed-logo.svg"
                 alt="ModMed"
                 className="h-[36px] w-auto opacity-100"
               />

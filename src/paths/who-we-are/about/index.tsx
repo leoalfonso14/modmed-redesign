@@ -4,6 +4,7 @@ import { Section } from '../../../components/ui/Section';
 import { Badge } from '../../../components/ui/Badge';
 import { GradientText } from '../../../components/ui/GradientText';
 import { Video } from '../../../components/ui/Video';
+import { SEO } from '../../../components/ui/SEO';
 import { 
   LineChart, HeartPulse, 
   Stethoscope, Globe, Star, Clock, 
@@ -32,6 +33,10 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#FCFCFD] selection:bg-brand-purple selection:text-white" ref={containerRef}>
+      <SEO 
+        title="About Us | Our Mission & Values" 
+        description="Learn about ModMed's mission to place doctors and patients at the center of care through intelligent, specialty-specific healthcare technology."
+      />
       
       {/* ─────────────────────────────────────────────
           HERO SECTION 

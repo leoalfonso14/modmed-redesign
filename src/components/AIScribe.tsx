@@ -1,4 +1,5 @@
 import { Mic2, Zap, Layout } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Section } from './ui/Section';
 import { GradientText } from './ui/GradientText';
 import { Button } from './ui/Button';
@@ -40,9 +41,11 @@ export function AIScribe() {
             ))}
           </ul>
           
-          <Button variant="primary" size="lg" className="h-14 px-8 shadow-[0_12px_24px_rgba(80,45,127,0.2)]">
-            Explore Scribe™
-          </Button>
+          <Link to="/solutions/ai/scribe">
+            <Button variant="primary" size="lg" className="h-14 px-8 shadow-[0_12px_24px_rgba(80,45,127,0.2)]">
+              Explore Scribe™
+            </Button>
+          </Link>
         </ScrollReveal>
 
         {/* Right Column: Visual Mockup */}

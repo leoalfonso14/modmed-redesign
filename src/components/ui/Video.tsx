@@ -2,15 +2,18 @@ import { useEffect, useRef } from "react";
 import { cn } from "../../lib/utils";
 
 // Declare Wistia types
+interface WistiaVideo {
+  play: () => Promise<void>;
+  pause: () => void;
+  muted: (muted: boolean) => void;
+  loop?: (value: boolean) => void;
+}
+
 declare global {
   interface Window {
     _wq: Array<{
       id: string;
-      onReady: (video: {
-        play: () => Promise<void>;
-        pause: () => void;
-        muted: (muted: boolean) => void;
-      }) => void;
+      onReady: (video: WistiaVideo) => void;
     }>;
   }
 }
@@ -29,14 +32,14 @@ type VideoProps = {
 export const Video = (props: VideoProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const wistiaVideoRef = useRef<any>(null);
+  const wistiaVideoRef = useRef<WistiaVideo | null>(null);
 
   // Sync mute state reactively
   useEffect(() => {
     if (props.wistiaId && wistiaVideoRef.current) {
-      wistiaVideoRef.current.muted(props.muted);
+      wistiaVideoRef.current.muted(props.muted ?? false);
     } else if (videoRef.current) {
-      videoRef.current.muted = props.muted || false;
+      videoRef.current.muted = props.muted ?? false;
     }
   }, [props.muted, props.wistiaId]);
 
@@ -81,13 +84,8 @@ export const Video = (props: VideoProps) => {
             video.muted(props.muted);
           }
           
-          if (
-            props.loop &&
-            "loop" in video &&
-            typeof (video as { loop?: (value: boolean) => void }).loop ===
-              "function"
-          ) {
-            (video as { loop: (value: boolean) => void }).loop(true);
+          if (props.loop && typeof video.loop === "function") {
+            video.loop(true);
           }
           // Programmatically play the video
           if (props.autoPlay) {

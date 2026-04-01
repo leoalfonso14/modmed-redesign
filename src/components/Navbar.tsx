@@ -31,7 +31,6 @@ import {
   Star,
   Video as VideoIcon,
   Library,
-  LogIn,
   CalendarCheck,
   Zap,
   Users,
@@ -345,13 +344,13 @@ function SpecialtiesPanel({ onClose }: { onClose: () => void }) {
       {/* Right — featured card */}
       <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
-        
+
         <div className="relative z-10">
           <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
             <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
             <span>Featured Focus</span>
           </div>
-          
+
           <div className="group/feat cursor-pointer">
             <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 border border-brand-purple/5 shadow-sm group-hover/feat:scale-110 group-hover/feat:shadow-md transition-all duration-500">
               <Dna className="w-7 h-7 text-brand-purple" />
@@ -360,11 +359,12 @@ function SpecialtiesPanel({ onClose }: { onClose: () => void }) {
               Specialty-Clinical Build
             </h4>
             <p className="text-slate-500 text-[11px] leading-relaxed font-medium mb-6">
-              ModMed is not a generic vendor. We build specifically for your workflow metrics.
+              ModMed is not a generic vendor. We build specifically for your
+              workflow metrics.
             </p>
           </div>
         </div>
-        
+
         <div className="relative z-10 pt-8 border-t border-slate-200/60">
           <Link
             to="/specialties"
@@ -428,10 +428,15 @@ function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
       {/* Integrations */}
       <div className="flex-1 p-8 space-y-4 content-start border-l border-slate-100">
         <div className="mb-3 px-3">
-          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-            <Cable className="w-3 h-3" />
+          <Link 
+            to="/integrations" 
+            onClick={onClose}
+            className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-brand-purple transition-colors group/label"
+          >
+            <Cable className="w-3 h-3 group-hover/label:rotate-12 transition-transform" />
             <span>Integrations</span>
-          </div>
+            <ArrowRight className="w-2.5 h-2.5 opacity-0 group-hover/label:opacity-100 transition-all translate-x-[-4px] group-hover:translate-x-0" />
+          </Link>
         </div>
         <div className="space-y-1">
           {INTEGRATIONS.map((item) => (
@@ -468,13 +473,13 @@ function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
       {/* Right — Featured Platform */}
       <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
         <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
-        
+
         <div className="relative z-10">
           <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
             <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
             <span>Top Adoption</span>
           </div>
-          
+
           <div className="group/feat cursor-pointer">
             <div className="w-14 h-14 rounded-[22px] bg-brand-purple/10 flex items-center justify-center mb-6 border border-brand-purple/5 shadow-sm group-hover/feat:scale-110 group-hover/feat:shadow-md transition-all duration-500">
               <CalendarCheck className="w-7 h-7 text-brand-purple" />
@@ -483,7 +488,8 @@ function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
               Practice Management
             </h4>
             <p className="text-slate-500 text-[11px] leading-relaxed font-medium mb-6">
-              The engine of your modern center of clinical excellence. High-velocity documentation.
+              The engine of your modern center of clinical excellence.
+              High-velocity documentation.
             </p>
           </div>
         </div>
@@ -505,7 +511,13 @@ function WhatWeDoPanel({ onClose }: { onClose: () => void }) {
   );
 }
 
-function SolutionsPanel({ onClose, onOpenVideo }: { onClose: () => void; onOpenVideo: () => void }) {
+function SolutionsPanel({
+  onClose,
+  onOpenVideo,
+}: {
+  onClose: () => void;
+  onOpenVideo: () => void;
+}) {
   return (
     <div className="flex">
       {/* Left — nav list */}
@@ -554,7 +566,7 @@ function SolutionsPanel({ onClose, onOpenVideo }: { onClose: () => void; onOpenV
           <span>Latest Innovation</span>
         </div>
 
-        <div 
+        <div
           onClick={onOpenVideo}
           className="relative z-10 group/video cursor-pointer overflow-hidden rounded-[24px] bg-slate-950 aspect-video mb-8 border border-slate-200/20 shadow-2xl"
         >
@@ -566,10 +578,10 @@ function SolutionsPanel({ onClose, onOpenVideo }: { onClose: () => void; onOpenV
             muted
             className="w-full h-full object-cover transition-transform duration-700 group-hover/video:scale-110 opacity-70 group-hover/video:opacity-100"
           />
-          
+
           {/* Ambient Overlays */}
           <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent opacity-60 group-hover/video:opacity-40 transition-opacity" />
-          
+
           {/* Play Icon and Prompt */}
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
             <div className="w-14 h-14 rounded-full bg-brand-purple text-white flex items-center justify-center shadow-2xl group-hover/video:scale-110 transition-all duration-500">
@@ -593,7 +605,8 @@ function SolutionsPanel({ onClose, onOpenVideo }: { onClose: () => void; onOpenV
             ModMed Scribe: Ambient AI
           </h4>
           <p className="text-[11px] text-slate-500 font-medium leading-relaxed mb-6">
-            Physicians have saved over 2.5 million moments with our clinical intelligence hub.
+            Physicians have saved over 2.5 million moments with our clinical
+            intelligence hub.
           </p>
           <button
             onClick={onOpenVideo}
@@ -662,7 +675,7 @@ function CompanyPanel({ onClose }: { onClose: () => void }) {
       {/* Right — boutique card */}
       <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between overflow-hidden relative group/panel">
         <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
-        
+
         <div className="relative z-10">
           <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
             <Users className="w-3.5 h-3.5 text-brand-purple" />
@@ -676,7 +689,8 @@ function CompanyPanel({ onClose }: { onClose: () => void }) {
               Physician-Led Innovation
             </h4>
             <p className="text-slate-500 text-[11px] font-medium leading-relaxed mb-6">
-              Founded by doctors to solve the clinical burnout crisis. We build only what's necessary.
+              Founded by doctors to solve the clinical burnout crisis. We build
+              only what's necessary.
             </p>
           </div>
         </div>
@@ -741,7 +755,7 @@ function ResourcesPanel({ onClose }: { onClose: () => void }) {
       {/* Right — high-end featured card */}
       <div className="w-[310px] shrink-0 border-l border-slate-100 bg-slate-50/50 p-9 flex flex-col justify-between relative overflow-hidden group/panel">
         <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-40 h-40 bg-brand-purple/5 blur-[60px] rounded-full pointer-events-none" />
-        
+
         <div className="relative z-10">
           <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">
             <BookOpen className="w-3.5 h-3.5 text-brand-purple" />
@@ -755,7 +769,8 @@ function ResourcesPanel({ onClose }: { onClose: () => void }) {
               Clinical AI Handbook
             </h4>
             <p className="text-slate-500 text-[11px] font-medium leading-relaxed mb-6">
-              Physician-vetted insights on AI compliance, MIPS, and practice efficiency.
+              Physician-vetted insights on AI compliance, MIPS, and practice
+              efficiency.
             </p>
           </div>
         </div>
@@ -860,7 +875,7 @@ export function Navbar() {
               className="shrink-0 transition-all hover:opacity-80 active:scale-95 duration-200"
             >
               <img
-                src="/src/assets/modmed-logo.svg"
+                src="/modmed-logo.svg"
                 alt="ModMed"
                 className="h-[28px] w-auto opacity-100 brightness-100 contrast-125"
               />
@@ -893,9 +908,6 @@ export function Navbar() {
 
             {/* Desktop CTAs */}
             <div className="hidden lg:flex items-center gap-4 ml-8">
-              <button className="text-sm font-bold text-slate-600 hover:text-brand-purple transition-colors">
-                Log In
-              </button>
               <Link to="/contact" onClick={closeDesktop}>
                 <button className="relative group overflow-hidden px-6 py-2.5 bg-brand-purple hover:bg-brand-purple-light text-white rounded-full text-sm font-black transition-all shadow-[0_4px_12px_rgba(80,45,127,0.2)] hover:-translate-y-0.5 active:scale-95">
                   <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
@@ -932,7 +944,15 @@ export function Navbar() {
                 <SpecialtiesPanel onClose={closeDesktop} />
               )}
               {open === "WhatWeDo" && <WhatWeDoPanel onClose={closeDesktop} />}
-              {open === "AI" && <SolutionsPanel onClose={closeDesktop} onOpenVideo={() => { setIsScribeModalOpen(true); closeDesktop(); }} />}
+              {open === "AI" && (
+                <SolutionsPanel
+                  onClose={closeDesktop}
+                  onOpenVideo={() => {
+                    setIsScribeModalOpen(true);
+                    closeDesktop();
+                  }}
+                />
+              )}
               {open === "WhoWeAre" && <CompanyPanel onClose={closeDesktop} />}
               {open === "Resources" && (
                 <ResourcesPanel onClose={closeDesktop} />
@@ -945,7 +965,7 @@ export function Navbar() {
         )}
       </nav>
 
-      <VideoModal 
+      <VideoModal
         isOpen={isScribeModalOpen}
         onClose={() => setIsScribeModalOpen(false)}
         wistiaId="6vnavaja1v"
@@ -978,7 +998,7 @@ export function Navbar() {
             className="active:scale-95 transition-transform"
           >
             <img
-              src="/src/assets/modmed-logo.svg"
+              src="/modmed-logo.svg"
               alt="ModMed"
               className="h-[24px] w-auto opacity-100"
             />
@@ -1133,9 +1153,6 @@ export function Navbar() {
 
         {/* Drawer footer CTAs */}
         <div className="shrink-0 border-t border-slate-100 p-4 space-y-2">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-slate-600 hover:text-slate-950 rounded-xl hover:bg-slate-50 transition-all">
-            <LogIn className="w-4 h-4" /> Log In
-          </button>
           <Link to="/contact" onClick={closeMobile} className="block">
             <button
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-brand-purple hover:bg-brand-purple-light text-white rounded-xl text-sm font-semibold transition-all shadow-[0_0_14px_rgba(80,45,127,0.2)]"

@@ -112,6 +112,48 @@ import type { LucideIcon } from 'lucide-react';
 import { LucideIcon } from 'lucide-react'; // will error
 ```
 
+### Typing Browser/Native APIs (No `any` allowed)
+When using browser-native APIs not yet in TypeScript's standard lib (e.g., Web Speech API, gestures), define local interfaces inside the component:
+
+```tsx
+// ✅ Correct — define your own interfaces for Web APIs
+interface SpeechRecognitionEvent extends Event {
+  resultIndex: number;
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  lang: string;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  start: () => void;
+  stop: () => void;
+}
+
+interface WindowWithSpeech extends Window {
+  SpeechRecognition?: { new (): SpeechRecognition };
+  webkitSpeechRecognition?: { new (): SpeechRecognition };
+}
+
+const SpeechRecognition =
+  (window as WindowWithSpeech).SpeechRecognition ||
+  (window as WindowWithSpeech).webkitSpeechRecognition;
+
+// ❌ Wrong — never cast to any to bypass the type system
+const SR = (window as any).webkitSpeechRecognition;
+```
+
+### Typing Refs
+```tsx
+// ✅ Correct
+const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+const recognitionRef = useRef<SpeechRecognition | null>(null);
+const sectionRef = useRef<HTMLDivElement>(null);
+
+// ❌ Wrong
+const timerRef = useRef<any>(null);
+```
+
 ---
 
 ## 4. Styling Rules
@@ -231,6 +273,32 @@ glow?: boolean   // default true — adds text-shadow glow
 | Utilities | camelCase | `formatDate.ts` |
 | Page route entries | `index.tsx` | `src/paths/home/index.tsx` |
 | Style files | lowercase | `index.css` |
+
+---
+
+## 9. Lighthouse & Quality Standards
+
+Every component and page must be built with Lighthouse performance and accessibility targets in mind.
+
+### Performance
+- **Image Optimization**: Always use WebP format. Use `loading="lazy"` for all images below the fold.
+- **Code Splitting**: Use dynamic imports (React.lazy) for heavy components or routes that aren't critical for initial paint.
+- **Bundle Size**: Avoid large third-party libraries. Prefer Lucide for icons and Framer Motion for complex animations only.
+
+### Accessibility (A11y)
+- **Landmarks**: Use semantic HTML5 elements (`<main>`, `<nav>`, `<footer>`, `<header>`).
+- **ARIA**: Provide `aria-label` for icon-only buttons and `aria-hidden` for decorative elements.
+- **Contrast**: Maintain a minimum 4.5:1 contrast ratio for all text elements.
+- **Focus**: Never disable focus outlines without providing a visible `:focus-visible` alternative.
+
+### SEO & Metadata
+- **SEO Component**: Every page entry point (`index.tsx`) must include the `<SEO />` component with a unique title and descriptive meta tag.
+- **Heading Hierarchy**: Ensure a single `<h1>` per page and follow a logical nesting order (`<h2>`, `<h3>`).
+
+### Best Practices
+- **Security**: Use `rel="noopener noreferrer"` for all external links (`target="_blank"`).
+- **Console**: Zero `console.log` or debug statements allowed in production builds.
+- **HTTPS**: All assets must be served over secure protocols.
 
 ---
 

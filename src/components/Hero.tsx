@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { GradientText } from './ui/GradientText';
@@ -38,23 +39,27 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center w-full animate-[fadeInUp_0.8s_ease-out_0.3s_both]">
-            <Button 
-              variant="primary" 
-              size="lg" 
-              icon={ArrowRight} 
-              className="w-full sm:w-auto h-14 px-8 text-base shadow-[0_12px_24px_rgba(80,45,127,0.25)]"
-            >
-              Explore Solutions
-            </Button>
-            <Button 
-              variant="glass" 
-              size="lg" 
-              icon={Play} 
-              iconPosition="left"
-              className="w-full sm:w-auto h-14 px-8 text-base bg-white/60"
-            >
-              See it in Action
-            </Button>
+            <Link to="/what-we-do">
+              <Button 
+                variant="primary" 
+                size="lg" 
+                icon={ArrowRight} 
+                className="w-full sm:w-auto h-14 px-8 text-base shadow-[0_12px_24px_rgba(80,45,127,0.25)]"
+              >
+                Explore Solutions
+              </Button>
+            </Link>
+            <Link to="/resources/webinars">
+              <Button 
+                variant="glass" 
+                size="lg" 
+                icon={Play} 
+                iconPosition="left"
+                className="w-full sm:w-auto h-14 px-8 text-base bg-white/60"
+              >
+                See it in Action
+              </Button>
+            </Link>
           </div>
         </div>
  

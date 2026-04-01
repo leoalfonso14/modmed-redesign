@@ -85,7 +85,8 @@ interface ComponentProps {
 export default function Component() {} // don't do this
 
 // ❌ No any types
-(props: any) => {} // never
+(props: any) => {} // NEVER - Use proper interfaces or 'unknown' if type is truly dynamic.
+const data: any = ...; // FORBIDDEN - This project aims for 100% type safety.
 ```
 
 ---
@@ -128,7 +129,8 @@ group-hover:scale-110 transition-transform
 
 ## Before Completing ANY Task
 
-1. Run `npm run build` to confirm zero TypeScript or build errors
-2. Verify no raw `<button>`, `<section>`, or `<div className="glass-panel">` tags exist in your new code
-3. Verify no hex color codes are used in `className` props where a brand token exists
-4. Ensure the file is stored in the correct path (`paths/` vs `components/`)
+1. Run `npm run lint` and `npm run build` to confirm zero TypeScript or ESLint errors.
+2. Verify no raw `<button>`, `<section>`, or `<div className="glass-panel">` tags exist.
+3. Verify no hex color codes are used in `className` props where a brand token exists.
+4. Ensure the file is stored in the correct path (`paths/` vs `components/`).
+5. Ensure the `<SEO />` component is present in all page-level `index.tsx` files.
