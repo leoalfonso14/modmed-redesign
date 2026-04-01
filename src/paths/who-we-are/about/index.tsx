@@ -41,7 +41,7 @@ export function AboutPage() {
       {/* ─────────────────────────────────────────────
           HERO SECTION 
       ───────────────────────────────────────────── */}
-      <div className="relative pt-40 pb-32 overflow-hidden flex items-center justify-center min-h-[70vh]">
+      <div className="relative pt-24 pb-12 md:pt-40 md:pb-32 overflow-hidden flex items-center justify-center min-h-[50vh] md:min-h-[70vh]">
         {/* Abstract Dynamic Background */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <motion.div 
@@ -77,7 +77,7 @@ export function AboutPage() {
       {/* ─────────────────────────────────────────────
           ORIGIN STORY (SPLIT LAYOUT)
       ───────────────────────────────────────────── */}
-      <Section className="py-24 sm:py-32 bg-white relative z-10 border-y border-slate-100 shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">
+      <Section className="py-12 md:py-24 sm:py-32 bg-white relative z-10 border-y border-slate-100 shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             
@@ -136,7 +136,7 @@ export function AboutPage() {
       {/* ─────────────────────────────────────────────
           CORE VALUES
       ───────────────────────────────────────────── */}
-      <Section className="py-24 sm:py-32 relative z-10 bg-slate-50">
+      <Section className="py-12 md:py-24 sm:py-32 relative z-10 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-4xl sm:text-5xl font-black text-slate-950 tracking-tight mb-6">
@@ -252,7 +252,7 @@ export function AboutPage() {
       {/* ─────────────────────────────────────────────
           BENTO GRID MILESTONES 
       ───────────────────────────────────────────── */}
-      <Section className="py-24 sm:py-32 relative z-10">
+      <Section className="py-12 md:py-24 sm:py-32 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           
           <div className="text-center max-w-2xl mx-auto mb-20">
@@ -350,7 +350,7 @@ export function AboutPage() {
       {/* ─────────────────────────────────────────────
           INFINITE MARQUEE SPECIALTIES 
       ───────────────────────────────────────────── */}
-      <div className="py-20 bg-white border-y border-slate-100 overflow-hidden flex flex-col items-center">
+      <div className="py-12 md:py-20 bg-white border-y border-slate-100 overflow-hidden flex flex-col items-center">
         <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-10 text-center px-4">Trusted across all major medical disciplines</p>
         
         <div className="flex w-full overflow-hidden relative" style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>

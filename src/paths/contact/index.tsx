@@ -211,7 +211,7 @@ export function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-24 bg-[#FCFCFD] relative overflow-hidden flex items-center">
+    <div className="min-h-screen pt-24 pb-12 md:pt-32 md:pb-24 bg-[#FCFCFD] relative overflow-hidden flex items-center">
       <SEO 
         title="Contact Us | Book a Demo" 
         description="Ready to modernize your practice? Contact ModMed to schedule a personalized demo and see our specialty-specific clinical solutions in action."

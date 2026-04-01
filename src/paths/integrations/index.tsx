@@ -60,7 +60,7 @@ export function IntegrationsPage() {
       />
 
       {/* ── Hero ── */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 px-6 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-purple/5 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px]" />
@@ -132,7 +132,7 @@ export function IntegrationsPage() {
       </Section>
 
       {/* ── AI Integration Spotlight ── */}
-      <Section className="py-24 bg-slate-950 relative overflow-hidden">
+      <Section className="py-12 md:py-24 bg-slate-950 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(80,45,127,0.15),transparent)] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">

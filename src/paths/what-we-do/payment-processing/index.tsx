@@ -47,7 +47,7 @@ export function PaymentProcessingPage() {
       />
 
       {/* Main Features */}
-      <div className="py-24">
+      <div className="py-12 md:py-24">
         {PAYMENT_FEATURES.map((f, idx) => (
           <FeatureParallax 
             key={f.title}

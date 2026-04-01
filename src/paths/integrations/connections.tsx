@@ -38,7 +38,7 @@ const NETWORK_CARDS = [
 
 export function ConnectionsPage() {
   return (
-    <div className="min-h-screen bg-[#FCFCFD] pt-32 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FCFCFD] pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
       <SEO 
         title="Network Connections & Connectivity | ModMed" 
         description="Expand your practice's reach with ModMed's nationwide connectivity. HL7, HIE, Carequality, and more."
@@ -91,7 +91,7 @@ export function ConnectionsPage() {
         </div>
 
         {/* ── Visual Backdrop ── */}
-        <section className="relative py-24 rounded-[40px] bg-slate-50 border border-slate-100 overflow-hidden text-center px-6">
+        <section className="relative py-12 md:py-24 rounded-[40px] bg-slate-50 border border-slate-100 overflow-hidden text-center px-6">
            <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-brand-purple/20 to-transparent" />
            <div className="mb-12">
               <h2 className="text-3xl font-black text-slate-950 mb-4 tracking-tight leading-tight italic">Nationwide <GradientText>Carequality® Readiness</GradientText></h2>

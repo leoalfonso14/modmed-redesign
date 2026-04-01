@@ -37,7 +37,7 @@ export function SolutionHero({
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-24 px-6 overflow-hidden bg-white"
+      className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 md:pt-32 md:pb-24 px-6 overflow-hidden bg-white"
     >
       {/* Parallax Background Glows */}
       <motion.div

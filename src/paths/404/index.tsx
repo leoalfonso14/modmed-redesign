@@ -45,7 +45,7 @@ export function NotFoundPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-32 sm:py-40 relative overflow-hidden bg-[#FCFCFD]">
+    <div className="min-h-screen flex items-center justify-center px-4 py-16 md:py-32 relative overflow-hidden bg-[#FCFCFD]">
       <SEO 
         title="404 Page Not Found" 
         description="Our clinical AI couldn't find the chart you were looking for. Please check the URL or head back home to find your way."

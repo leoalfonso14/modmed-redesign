@@ -354,7 +354,7 @@ export function Chatbox() {
                   <div className="w-8 h-8 shrink-0 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center mt-0.5">
                     <AlertCircle className="w-4 h-4 text-red-500" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-red-50 border border-red-100 px-4 py-3 text-sm">
+                  <div className={`max-w-[82%] rounded-2xl rounded-tl-sm bg-red-50 border border-red-100 px-4 py-3 text-sm wrap-break-word`}>
                     <p className="text-red-600 font-black uppercase tracking-widest text-[10px]">Connection Error</p>
                     <p className="text-slate-500 text-xs mt-1 font-medium">{error.message || 'Could not reach the AI service.'}</p>
                   </div>

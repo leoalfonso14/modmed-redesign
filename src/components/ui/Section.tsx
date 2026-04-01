@@ -26,7 +26,7 @@ export function Section({
   };
 
   return (
-    <section id={id} className={`py-24 relative overflow-hidden ${className}`}>
+    <section id={id} className={`py-12 md:py-24 relative overflow-hidden ${className}`}>
       {glowStyles[glow]}
       <div className={`${fullWidth ? 'w-full' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}`}>
         <ScrollReveal>

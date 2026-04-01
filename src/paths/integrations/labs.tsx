@@ -39,7 +39,7 @@ const LAB_FEATURES = [
 
 export function LabsPage() {
   return (
-    <div className="min-h-screen bg-[#FCFCFD] pt-32 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FCFCFD] pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
       <SEO 
         title="Lab Interfaces & Diagnostics | ModMed Connectivity" 
         description="Streamline diagnostics with direct EHR-to-lab connectivity. Order tests, track specimen, and receive results directly in EMA."

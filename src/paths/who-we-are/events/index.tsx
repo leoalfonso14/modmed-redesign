@@ -74,7 +74,7 @@ export function EventsPage() {
         description="Join ModMed at major medical conferences and specialty-specific events. Meet our experts and see the future of specialty healthcare in person."
       />
       {/* ── Hero ── */}
-      <section className="relative py-20 px-6 sm:px-8 border-b border-slate-50 overflow-hidden">
+      <section className="relative py-12 md:py-20 px-6 sm:px-8 border-b border-slate-50 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(80,45,127,0.03),transparent)] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -114,7 +114,7 @@ export function EventsPage() {
 
       {/* ── Featured Event ── */}
       {featuredEvent && (
-        <section className="py-24 px-6 sm:px-8 bg-slate-50/50">
+        <section className="py-12 md:py-24 px-6 sm:px-8 bg-slate-50/50">
           <div className="max-w-7xl mx-auto">
             <ScrollReveal direction="right" delay={0.1}>
               <div className="relative overflow-hidden rounded-[40px] bg-slate-900 aspect-[16/7] group">
@@ -174,7 +174,7 @@ export function EventsPage() {
       )}
 
       {/* ── Event Grid ── */}
-      <section className="py-24 px-6 sm:px-8">
+      <section className="py-12 md:py-24 px-6 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-16 px-4">
             <div className="max-w-xl">
@@ -245,7 +245,7 @@ export function EventsPage() {
       </section>
 
       {/* ── Call to Action ── */}
-      <section className="py-32 px-6 sm:px-8 border-t border-slate-50 bg-white relative overflow-hidden">
+      <section className="py-16 md:py-32 px-6 sm:px-8 border-t border-slate-50 bg-white relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] rounded-full" />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">

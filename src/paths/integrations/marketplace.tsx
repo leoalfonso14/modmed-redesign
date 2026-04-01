@@ -59,7 +59,7 @@ const MARKETPLACE_PARTNERS = [
 
 export function MarketplacePage() {
   return (
-    <div className="min-h-screen bg-[#FCFCFD] pt-32 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FCFCFD] pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
       <SEO
         title="synapSYS Marketplace | Clinical Ecosystem"
         description="Browse featured partners in the ModMed synapSYS Marketplace. Scale your practice with AI-powered patient engagement and clinical tools."

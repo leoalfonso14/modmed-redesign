@@ -34,7 +34,7 @@ export function FeatureParallax({
   const rotate = useTransform(scrollYProgress, [0, 1], [reverse ? -5 : 5, reverse ? 5 : -5]);
 
   return (
-    <section ref={containerRef} className="py-24 px-6 overflow-hidden">
+    <section ref={containerRef} className="py-12 md:py-24 px-6 overflow-hidden">
       <div className={`max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 ${reverse ? 'lg:flex-row-reverse' : ''}`}>
         
         {/* Text Content */}

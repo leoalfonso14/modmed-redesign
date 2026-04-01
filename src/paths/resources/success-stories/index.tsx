@@ -29,7 +29,7 @@ export function SuccessStoriesPage() {
       {/* ─────────────────────────────────────────────
           HERO
       ───────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 px-6 overflow-hidden">
         {/* Clinical Grid Background */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
           style={{ 

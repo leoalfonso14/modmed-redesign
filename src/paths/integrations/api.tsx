@@ -26,7 +26,7 @@ const API_FEATURES = [
 
 export function APIPage() {
   return (
-    <div className="min-h-screen bg-[#FCFCFD] pt-32 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FCFCFD] pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
       <SEO
         title="Developer API Portal | FHIR Interoperability"
         description="Build specialized health apps with ModMed's FHIR-certified APIs. Secure, scalable, and built for modern clinical innovation."

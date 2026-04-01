@@ -259,7 +259,7 @@ export function AISolutionsPage() {
       />
 
       {/* ── Hero: The Intelligence Hub ── */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-24 px-6 overflow-hidden">
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
 
@@ -317,7 +317,7 @@ export function AISolutionsPage() {
       </section>
 
       {/* ── Unique Animation: The Neural Clinical Bridge ── */}
-      <section className="py-24 relative">
+      <section className="py-12 md:py-24 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-24">
             <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] mb-4 italic">
@@ -549,7 +549,7 @@ export function AISolutionsPage() {
       </section>
 
       {/* ── AI Pillars Bento Grid ── */}
-      <Section className="py-32 bg-slate-50/50">
+      <Section className="py-16 md:py-32 bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {AI_PILLARS.map((pillar, idx) => (
@@ -586,7 +586,7 @@ export function AISolutionsPage() {
       </Section>
 
       {/* ── Responsible AI Spotlight Interaction ── */}
-      <Section className="py-24 bg-slate-950 overflow-hidden relative">
+      <Section className="py-12 md:py-24 bg-slate-950 overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(80,45,127,0.1),transparent)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">

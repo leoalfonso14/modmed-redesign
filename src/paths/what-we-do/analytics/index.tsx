@@ -47,7 +47,7 @@ export function AnalyticsPage() {
       />
 
       {/* Main Features */}
-      <div className="py-24">
+      <div className="py-12 md:py-24">
         {ANALYTICS_FEATURES.map((f, idx) => (
           <FeatureParallax 
             key={f.title}

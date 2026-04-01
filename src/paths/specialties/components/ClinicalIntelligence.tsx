@@ -5,7 +5,7 @@ import { Badge } from '../../../components/ui/Badge';
 import { ScrollReveal } from '../../../components/ui/ScrollReveal';
 
 export const ScribeSection = ({ accentColor, accentBg, label }: { accentColor: string, accentBg: string, label: string }) => (
-  <Section className="bg-slate-950 text-white overflow-hidden py-32">
+  <Section className="bg-slate-950 text-white overflow-hidden py-16 md:py-32">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
         <div>
@@ -135,7 +135,7 @@ export const AISolutionsSection = ({ accentColor, accentBg }: { accentColor: str
 );
 
 export const ImagingSection = ({ accentColor, accentBg }: { accentColor: string, accentBg: string }) => (
-  <Section id="imaging" className="bg-white py-32">
+  <Section id="imaging" className="bg-white py-16 md:py-32">
     <div className="max-w-7xl mx-auto px-6 overflow-hidden">
       <div className="bg-slate-50 rounded-[48px] p-12 sm:p-20 relative overflow-hidden border border-slate-100 flex flex-col lg:flex-row gap-16 items-center">
         <div className="lg:w-1/2 relative z-10">

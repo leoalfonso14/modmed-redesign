@@ -90,7 +90,7 @@ export function WhatWeDoPage() {
       />
 
       {/* Hero Section */}
-      <Section className="relative pt-32 pb-24 px-6">
+      <Section className="relative pt-24 pb-12 md:pt-32 md:pb-24 px-6">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-brand-purple/5 rounded-full blur-[120px] -z-10" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -118,7 +118,7 @@ export function WhatWeDoPage() {
       </Section>
 
       {/* The Clinical Pulse Animation Container */}
-      <div className="relative max-w-7xl mx-auto px-6 pb-32">
+      <div className="relative max-w-7xl mx-auto px-6 pb-16 md:pb-32">
         {/* The SVG Spine */}
         <div className="absolute left-[50%] top-0 bottom-0 w-px bg-slate-100 -translate-x-1/2 hidden lg:block">
           <motion.div
@@ -142,7 +142,7 @@ export function WhatWeDoPage() {
         </div>
 
         {/* Pillars Content */}
-        <div className="space-y-40 relative z-10 pt-20">
+        <div className="space-y-24 lg:space-y-40 relative z-10 pt-12 lg:pt-20">
           {PILLARS.map((pillar, idx) => (
             <div
               key={pillar.id}
@@ -313,7 +313,7 @@ export function WhatWeDoPage() {
       </div>
 
       {/* Trust Quote / Proof */}
-      <Section className="bg-slate-950 py-32 relative overflow-hidden">
+      <Section className="bg-slate-950 py-16 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(80,45,127,0.15),transparent)]" />
         <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
           <ShieldCheck className="w-16 h-16 text-brand-purple-light mx-auto mb-12" />

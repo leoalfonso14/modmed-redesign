@@ -27,7 +27,7 @@ export function SpecialtyPage() {
       {/* ─────────────────────────────────────────────
           HERO
       ───────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-24 px-4 overflow-hidden bg-white">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-24 px-4 overflow-hidden bg-white">
         {/* Clinical Grid Background */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
           style={{ 

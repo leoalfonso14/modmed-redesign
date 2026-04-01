@@ -47,7 +47,7 @@ export function EHRPage() {
       />
 
       {/* Main Features */}
-      <div id="features" className="py-24">
+      <div id="features" className="py-12 md:py-24">
         {FEATURES.map((f, idx) => (
           <FeatureParallax 
             key={f.title}
